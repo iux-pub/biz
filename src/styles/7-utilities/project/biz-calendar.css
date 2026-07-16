@@ -78,9 +78,9 @@
   @apply h-[6rem] p-0 align-top pc:h-[11rem];
 }
 
-/* Figma 정본(PC 279:591): 주(행) 사이 가로 보더 #ccc — 모바일 시안에는 없음 */
+/* 주(행) 사이 가로 보더 #ccc — PC 시안(279:591) 기준, 모바일에도 동일 적용 */
 .rsv-cal__grid tbody tr + tr td {
-  @apply pc:border-t pc:border-t-[var(--color-brand-icon-subtle)];
+  @apply border-t border-t-[var(--color-brand-icon-subtle)];
 }
 
 /* 일자 버튼 — 셀 전체 채움으로 터치 영역(모바일 46×60 ≥ 44px) 확보.

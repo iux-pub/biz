@@ -96,7 +96,7 @@
 
 .photo-item__remove {
   @apply absolute top-0 right-0 flex items-center justify-center w-[4.4rem] h-[4.4rem]
-         rounded-[999px] border-0 cursor-pointer bg-[var(--color-surface)]
+         rounded-[100px_52px_100px_100px] border-0 cursor-pointer bg-[var(--color-surface)]
          text-[2rem] leading-none text-[var(--color-brand-text)];
 }
 
