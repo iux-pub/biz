@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>감성미식 BIZ — 회원가입 사업장 정보 입력</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov-dynamic-subset.min.css">
+  <link rel="stylesheet" href="dist/css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-to-content">본문 바로가기</a>
+  <header id="header" hidden></header>
+
+  <main id="main" class="auth-modal-page">
+    <section class="auth-modal" aria-labelledby="signup-title">
+      <div class="container">
+      <a class="auth-modal__close" href="sub.html" aria-label="회원가입 닫기">&times;</a>
+
+      <h1 class="auth-modal__title" id="signup-title">회원가입</h1>
+      <p class="auth-modal__subtitle">사업장 정보 입력</p>
+
+      <form action="main.html" method="get">
+        <div class="auth-modal__field">
+          <label class="auth-modal__label" for="signup-name">상호명</label>
+          <input class="auth-modal__input" type="text" id="signup-name" name="business-name"
+                 placeholder="**카페" autocomplete="organization" required>
+        </div>
+
+        <fieldset class="auth-modal__field">
+          <legend class="auth-modal__label">업종선택</legend>
+          <div class="auth-modal__chips">
+            <input class="auth-modal__chip-input sr-only" type="radio" id="type-cafe" name="business-type" value="cafe" checked>
+            <label class="auth-modal__chip" for="type-cafe">카페/베이커리</label>
+
+            <input class="auth-modal__chip-input sr-only" type="radio" id="type-restaurant" name="business-type" value="restaurant">
+            <label class="auth-modal__chip" for="type-restaurant">식당</label>
+
+            <input class="auth-modal__chip-input sr-only" type="radio" id="type-pub" name="business-type" value="pub">
+            <label class="auth-modal__chip" for="type-pub">주점</label>
+
+            <input class="auth-modal__chip-input sr-only" type="radio" id="type-etc" name="business-type" value="etc">
+            <label class="auth-modal__chip" for="type-etc">기타</label>
+          </div>
+        </fieldset>
+
+        <div class="auth-modal__field">
+          <label class="auth-modal__label" for="signup-address">사업장주소</label>
+          <div class="auth-modal__row">
+            <input class="auth-modal__input" type="text" id="signup-address" name="business-address" required>
+            <button type="button" class="auth-modal__search">검색</button>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-modal__submit">회원가입</button>
+      </form>
+      </div>
+    </section>
+  </main>
+  <footer id="footer" hidden></footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+/**
+ * INFOMIND UX 가이드 — 메인 스타일
+ *
+ * Tailwind v4 + INFOUX 파운데이션 토큰 + ITCSS 레이어 구조
+ * 출처: tokens/foundation.json (build/tokens.css)
+ *
+ * 절대 직접 수정 금지: ../../tokens/build/tokens.css
+ * 토큰 변경은 tokens/foundation.json에서 한다.
+ */
+
+@import "tailwindcss";
+
+/* ─── ITCSS 레이어 우선순위 ─── */
+@layer base, components, utilities;
+
+/* ─── 1-settings — 색상 + 기본 폰트 + 브레이크포인트 토큰 ─── */
+@import "../../tokens/build/tokens.css";
+
+/* ─── 3-generic — 리셋 (62.5% 트릭 포함) ─── */
+@import "./3-generic/reset.css";
+
+/* ─── 4-elements — HTML 태그 베이스 ─── */
+@import "./4-elements/base.css";
+
+/* ─── 5-objects — 레이아웃 패턴 ─── */
+@import "./5-objects/container.css";
+
+/* ─── 6-components — UI 컴포넌트 (KRDS 기반 BEM) ─── */
+@import "./6-components/index.css";
+
+/* ─── 7-utilities — 유틸리티 (Tailwind에 없는 것만) ─── */
+@import "./7-utilities/sr-only.css";
+
+/* ─── 프로젝트별 스타일 확장 슬롯 ─── */
+
+/* 감성미식 BIZ 공용 SNS 로고 아이콘 (CSS mask) */
+@import "./7-utilities/project/biz-icons.css";
+
+/* 감성미식 BIZ 사용자 메인 대시보드 */
+@import "./7-utilities/project/biz-main.css";
+
+/* 감성미식 BIZ 인증 (로그인/회원가입) */
+@import "./7-utilities/project/biz-auth.css";
+
+/* 감성미식 BIZ 콘텐츠 생성 */
+@import "./7-utilities/project/biz-create.css";
+
+/* 감성미식 BIZ 게시 이력 관리 */
+@import "./7-utilities/project/biz-history.css";
+
+/* 감성미식 BIZ SNS 계정연동 관리 */
+@import "./7-utilities/project/biz-sns.css";
+
+/* 감성미식 BIZ 예약캘린더 */
+@import "./7-utilities/project/biz-calendar.css";

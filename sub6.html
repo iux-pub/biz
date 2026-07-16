@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>감성미식 BIZ — 게시 이력 관리</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="dist/css/style.css" />
+  </head>
+  <body>
+    <a href="#main" class="skip-to-content">본문 바로가기</a>
+
+
+    <div class="biz-shell">
+      <!-- 상단 헤더 (모바일·태블릿) -->
+      <header id="header" class="biz-topbar">
+        <a class="biz-topbar__brand" href="main.html">
+          <img class="biz-topbar__mark" src="src/image/logo-m.png" alt="감성미식" width="51" height="36" />
+          <span class="biz-topbar__badge">BIZ</span>
+        </a>
+        <button type="button" class="biz-topbar__toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="biz-nav" data-drawer-toggle>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2" />
+            <path d="M9 4v16" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </button>
+      </header>
+
+      <!-- 사이드바 / 드로어 -->
+      <aside id="biz-nav" class="biz-sidebar" aria-label="사이드바">
+        <div class="biz-sidebar__head">
+          <img class="biz-sidebar__mark" src="src/image/logo-pc.png" alt="감성미식" width="189" height="189" />
+          <span class="biz-sidebar__badge">BIZ</span>
+        </div>
+
+        <nav class="biz-sidebar__nav" aria-label="주 메뉴">
+          <ul class="biz-sidebar__list">
+            <li>
+              <a class="biz-sidebar__link" href="main.html">
+                <svg class="biz-sidebar__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3L23 11.25L21.8 12.85L20 11.5V21H4V11.5L2.2 12.85L1 11.25L12 3ZM18 19V10L12 5.5L6 10V19H18Z" fill="currentColor" />
+                </svg>
+                홈
+              </a>
+            </li>
+            <li>
+              <a class="biz-sidebar__link" href="sub3.html">
+                <svg class="biz-sidebar__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M4 20C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V12H4V18H16V6H10V4H16C16.55 4 17.0208 4.19583 17.4125 4.5875C17.8042 4.97917 18 5.45 18 6V10.5L22 6.5V17.5L18 13.5V18C18 18.55 17.8042 19.0208 17.4125 19.4125C17.0208 19.8042 16.55 20 16 20H4ZM5 16H15L11.625 11.5L9 15L7.375 12.825L5 16ZM4 10V8H2V6H4V4H6V6H8V8H6V10H4Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                콘텐츠생성
+              </a>
+            </li>
+            <li>
+              <a class="biz-sidebar__link" href="sub8.html">
+                <svg class="biz-sidebar__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V6C3 5.45 3.19583 4.97917 3.5875 4.5875C3.97917 4.19583 4.45 4 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.0208 4.19583 20.4125 4.5875C20.8042 4.97917 21 5.45 21 6V12.375L19 14.375V10H5V20H11.2L13.2 22H5ZM5 8H19V6H5V8ZM16.55 22.5L13 18.95L14.4 17.55L16.525 19.675L20.775 15.425L22.175 16.85L16.55 22.5Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                예약캘린더
+              </a>
+            </li>
+            <li>
+              <a class="biz-sidebar__link biz-sidebar__link--current" href="sub6.html" aria-current="page">
+                <svg class="biz-sidebar__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M13.4625 20.5375C12.4875 19.5625 12 18.3833 12 17C12 15.6167 12.4875 14.4375 13.4625 13.4625C14.4375 12.4875 15.6167 12 17 12C18.3833 12 19.5625 12.4875 20.5375 13.4625C21.5125 14.4375 22 15.6167 22 17C22 18.3833 21.5125 19.5625 20.5375 20.5375C19.5625 21.5125 18.3833 22 17 22C15.6167 22 14.4375 21.5125 13.4625 20.5375ZM18.675 19.375L19.375 18.675L17.5 16.8V14H16.5V17.2L18.675 19.375ZM5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H9.175C9.35833 2.41667 9.71667 1.9375 10.25 1.5625C10.7833 1.1875 11.3667 1 12 1C12.6667 1 13.2625 1.1875 13.7875 1.5625C14.3125 1.9375 14.6667 2.41667 14.85 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V11.25C20.7 11.0333 20.3833 10.85 20.05 10.7C19.7167 10.55 19.3667 10.4167 19 10.3V5H17V8H7V5H5V19H10.3C10.4167 19.3667 10.55 19.7167 10.7 20.05C10.85 20.3833 11.0333 20.7 11.25 21H5ZM12.7125 4.7125C12.9042 4.52083 13 4.28333 13 4C13 3.71667 12.9042 3.47917 12.7125 3.2875C12.5208 3.09583 12.2833 3 12 3C11.7167 3 11.4792 3.09583 11.2875 3.2875C11.0958 3.47917 11 3.71667 11 4C11 4.28333 11.0958 4.52083 11.2875 4.7125C11.4792 4.90417 11.7167 5 12 5C12.2833 5 12.5208 4.90417 12.7125 4.7125Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                게시이력
+              </a>
+            </li>
+            <li>
+              <a class="biz-sidebar__link" href="sub7.html">
+                <svg class="biz-sidebar__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M19 9C18.05 9 17.225 8.71667 16.525 8.15C15.825 7.58333 15.3583 6.86667 15.125 6H8.85C8.66667 6.7 8.32083 7.30417 7.8125 7.8125C7.30417 8.32083 6.7 8.66667 6 8.85V15.125C6.86667 15.3583 7.58333 15.825 8.15 16.525C8.71667 17.225 9 18.05 9 19C9 20.1 8.60833 21.0417 7.825 21.825C7.04167 22.6083 6.1 23 5 23C3.9 23 2.95833 22.6083 2.175 21.825C1.39167 21.0417 1 20.1 1 19C1 18.05 1.28333 17.225 1.85 16.525C2.41667 15.825 3.13333 15.3583 4 15.125V8.85C3.13333 8.61667 2.41667 8.15 1.85 7.45C1.28333 6.75 1 5.93333 1 5C1 3.9 1.39167 2.95833 2.175 2.175C2.95833 1.39167 3.9 1 5 1C5.93333 1 6.75 1.28333 7.45 1.85C8.15 2.41667 8.61667 3.13333 8.85 4H15.125C15.3583 3.13333 15.825 2.41667 16.525 1.85C17.225 1.28333 18.05 1 19 1C20.1 1 21.0417 1.39167 21.825 2.175C22.6083 2.95833 23 3.9 23 5C23 6.1 22.6083 7.04167 21.825 7.825C21.0417 8.60833 20.1 9 19 9ZM5 21C5.55 21 6.02083 20.8 6.4125 20.4C6.80417 20 7 19.5333 7 19C7 18.45 6.80417 17.9792 6.4125 17.5875C6.02083 17.1958 5.55 17 5 17C4.46667 17 4 17.1958 3.6 17.5875C3.2 17.9792 3 18.45 3 19C3 19.5333 3.2 20 3.6 20.4C4 20.8 4.46667 21 5 21ZM5 7C5.55 7 6.02083 6.80417 6.4125 6.4125C6.80417 6.02083 7 5.55 7 5C7 4.45 6.80417 3.97917 6.4125 3.5875C6.02083 3.19583 5.55 3 5 3C4.46667 3 4 3.19583 3.6 3.5875C3.2 3.97917 3 4.45 3 5C3 5.55 3.2 6.02083 3.6 6.4125C4 6.80417 4.46667 7 5 7ZM19 23C17.9 23 16.9583 22.6083 16.175 21.825C15.3917 21.0417 15 20.1 15 19C15 17.9 15.3917 16.9583 16.175 16.175C16.9583 15.3917 17.9 15 19 15C20.1 15 21.0417 15.3917 21.825 16.175C22.6083 16.9583 23 17.9 23 19C23 20.1 22.6083 21.0417 21.825 21.825C21.0417 22.6083 20.1 23 19 23ZM19 21C19.55 21 20.0208 20.8 20.4125 20.4C20.8042 20 21 19.5333 21 19C21 18.45 20.8042 17.9792 20.4125 17.5875C20.0208 17.1958 19.55 17 19 17C18.45 17 17.9792 17.1958 17.5875 17.5875C17.1958 17.9792 17 18.45 17 19C17 19.5333 17.1958 20 17.5875 20.4C17.9792 20.8 18.45 21 19 21ZM19 7C19.55 7 20.0208 6.80417 20.4125 6.4125C20.8042 6.02083 21 5.55 21 5C21 4.45 20.8042 3.97917 20.4125 3.5875C20.0208 3.19583 19.55 3 19 3C18.45 3 17.9792 3.19583 17.5875 3.5875C17.1958 3.97917 17 4.45 17 5C17 5.55 17.1958 6.02083 17.5875 6.4125C17.9792 6.80417 18.45 7 19 7Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                SNS연동
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- 드로어 백드롭 -->
+      <div class="biz-scrim" data-drawer-scrim hidden></div>
+
+      <!-- 콘텐츠 -->
+      <div class="biz-content">
+        <div class="biz-content__inner">
+          <nav class="biz-breadcrumb" aria-label="현재 위치">
+            <ol class="biz-breadcrumb__list">
+              <li><a class="biz-breadcrumb__link" href="main.html">감성미식 BIZ</a></li>
+              <li class="biz-breadcrumb__sep" aria-hidden="true">&rsaquo;</li>
+              <li class="biz-breadcrumb__current" aria-current="page">게시 이력 관리</li>
+            </ol>
+          </nav>
+
+          <main id="main">
+            <!-- 필터 -->
+            <section class="biz-section" aria-label="이력 필터">
+              <div class="container">
+                <h1 class="sr-only">게시 이력 관리</h1>
+                <form class="history-filter" action="" method="get">
+                  <fieldset class="border-0 m-0 min-w-0 p-0">
+                    <legend class="sr-only">상태 필터</legend>
+                    <div class="choice-chips">
+                      <input class="choice-input sr-only" type="radio" id="filter-all" name="status" value="all" checked />
+                      <label class="choice-chip" for="filter-all">전체</label>
+
+                      <input class="choice-input sr-only" type="radio" id="filter-done" name="status" value="done" />
+                      <label class="choice-chip" for="filter-done">게시 완료</label>
+
+                      <input class="choice-input sr-only" type="radio" id="filter-pending" name="status" value="pending" />
+                      <label class="choice-chip" for="filter-pending">예약 대기</label>
+
+                      <input class="choice-input sr-only" type="radio" id="filter-failed" name="status" value="failed" />
+                      <label class="choice-chip" for="filter-failed">실패</label>
+                    </div>
+                  </fieldset>
+
+                  <div class="history-filter__period">
+                    <label class="sr-only" for="filter-period">기간 선택</label>
+                    <select class="history-filter__select" id="filter-period" name="period">
+                      <option value="" selected>기간 선택</option>
+                      <option value="7d">최근 7일</option>
+                      <option value="30d">최근 30일</option>
+                      <option value="90d">최근 3개월</option>
+                    </select>
+                    <svg class="history-filter__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+            <!-- 이력 리스트 -->
+            <section class="biz-section" aria-labelledby="history-heading">
+              <div class="container">
+                <h2 class="sr-only" id="history-heading">게시 이력 목록</h2>
+                <ul class="history-list">
+                  <!-- 상태 클래스는 li(history-card)에 하나만 단다 — 채널명·로고·날짜 색 + 썸네일 흑백을 CSS가 한 번에 처리
+                       완료 : history-card--success (썸네일 원본 컬러)
+                       실패 : history-card--error   (썸네일 자동 흑백)
+                       대기 : history-card--pending (썸네일 자동 흑백) -->
+                  <li class="history-card history-card--success">
+                    <img class="history-card__thumb" src="src/image/promo-hallabong.png" alt="게시물 썸네일 — 6월 신메뉴 한라봉 크로플" />
+                    <div class="history-card__body">
+                      <p class="history-card__title">&#127818; 6월 신메뉴 한라봉 크로플 제주의 달콤한 한라봉을 듬뿍 담은&hellip;</p>
+                      <p class="history-card__status">
+                        <span class="history-card__channel">
+                          <span class="history-card__channel-icon" aria-hidden="true">
+                            <!-- 인스타그램 로고 -->
+                            <span class="ico-sns ico-sns--instagram" aria-hidden="true"></span>
+                          </span>
+                          인스타그램 게시완료
+                        </span>
+                        <span class="history-card__date">6/10 18:00 게시 &middot; 스마트 예약</span>
+                      </p>
+                      <div class="history-card__actions">
+                        <a class="history-card__btn history-card__btn--primary" href="#">
+                          게시물 보기
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="history-card history-card--error">
+                    <img class="history-card__thumb" src="src/image/promo-hallabong.png" alt="게시물 썸네일 — 6월 신메뉴 한라봉 크로플 (게시 실패)" />
+                    <div class="history-card__body">
+                      <p class="history-card__title">&#127818; 6월 신메뉴 한라봉 크로플 제주의 달콤한 한라봉을 듬뿍 담은&hellip;</p>
+                      <p class="history-card__status">
+                        <span class="history-card__channel">
+                          <span class="history-card__channel-icon" aria-hidden="true">
+                            <!-- 네이버 블로그 로고 -->
+                            <span class="ico-sns ico-sns--naver-blog" aria-hidden="true"></span>
+                          </span>
+                          네이버블로그 게시 실패
+                        </span>
+                        <span class="history-card__date">6/9 11:30 &mdash; 토큰 만료 (재인증 필요)</span>
+                      </p>
+                      <div class="history-card__actions">
+                        <button type="button" class="history-card__btn">재시도</button>
+                        <a class="history-card__btn" href="sub7.html">재인증 이동</a>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="history-card history-card--pending">
+                    <img class="history-card__thumb" src="src/image/promo-hallabong.png" alt="게시물 썸네일 — 6월 신메뉴 한라봉 크로플 (예약 대기)" />
+                    <div class="history-card__body">
+                      <p class="history-card__title">&#127818; 6월 신메뉴 한라봉 크로플 제주의 달콤한 한라봉을 듬뿍 담은&hellip;</p>
+                      <p class="history-card__status">
+                        <span class="history-card__channel">
+                          <span class="history-card__channel-icon" aria-hidden="true">
+                            <!-- 인스타그램 로고 -->
+                            <span class="ico-sns ico-sns--instagram" aria-hidden="true"></span>
+                          </span>
+                          인스타그램 예약대기
+                        </span>
+                        <span class="history-card__date">6/12 18:00 예정</span>
+                      </p>
+                      <div class="history-card__actions">
+                        <button type="button" class="history-card__btn">예약변경</button>
+                        <button type="button" class="history-card__btn">예약취소</button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </main>
+        </div>
+        <footer id="footer" class="biz-footer">
+          <div class="biz-footer__inner">
+            <ul class="biz-footer__links">
+              <li><a class="biz-footer__link" href="#">개인정보처리방침</a></li>
+              <li><a class="biz-footer__link" href="#">이용약관</a></li>
+              <li><a class="biz-footer__link" href="#">고객문의</a></li>
+            </ul>
+            <p class="biz-footer__copy">&copy; 2026 JEJU Gamsung Mishik. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="src/js/common.js"></script>
+  </body>
+</html>

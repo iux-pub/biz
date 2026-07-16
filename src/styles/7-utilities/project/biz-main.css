@@ -1,0 +1,464 @@
+/**
+ * 감성미식 BIZ — 사용자 메인 (소상공인 대시보드)
+ *
+ * 기준: Figma "감성미식 소상공인" · 사용자 메인 Mobile(360, 32:66) + 사용자 메인 PC(1440, 32:2) 정확값.
+ * - Mobile/Tablet: 상단 다크틸 헤더 + 오프캔버스 드로어 내비.
+ * - PC(≥1280): 좌측 다크틸 사이드바 고정 + 웜샌드 콘텐츠 영역.
+ * 색상은 전부 --color-brand-* / KRDS 시맨틱 토큰. raw hex 미사용.
+ * 그림자 정본 0 8px 20px rgba(31,41,51,8%) ≈ color-mix(gray-90 8%).
+ */
+
+/* ─── 페이지 셸 ─── */
+
+/* 세로 flex로 콘텐츠 영역이 남은 높이를 채워 푸터가 항상 하단에 붙는다 */
+.biz-shell {
+  @apply flex flex-col min-h-screen bg-[var(--color-brand-bg)] text-[var(--color-brand-text)]
+         pc:flex-row;
+}
+
+/* ─── 상단 헤더 (모바일·태블릿) ─── */
+.biz-topbar {
+  @apply sticky top-0 z-30 flex items-center justify-between gap-[1.2rem]
+         h-[6.4rem] px-[1.6rem] rounded-b-[1.6rem]
+         bg-[var(--color-brand-primary-dark)] text-[var(--color-text-inverse)]
+         pc:hidden;
+}
+
+/* 시각 높이 36px(로고) 유지, 터치 영역 상하 0.5rem 확장으로 44px 이상 확보 */
+.biz-topbar__brand {
+  @apply relative flex items-center gap-[0.8rem] text-[var(--color-text-inverse)] no-underline;
+}
+
+.biz-topbar__brand::after {
+  content: '';
+
+  @apply absolute inset-x-0 -inset-y-[0.5rem];
+}
+
+.biz-topbar__mark {
+  @apply block h-[3.6rem] w-auto shrink-0;
+}
+
+.biz-topbar__badge {
+  @apply inline-flex items-center leading-none font-[900] tracking-[-0.1rem] text-[1.8rem];
+}
+
+/* Figma 정본 40px 원형 버튼 — 터치 영역 44px 유지를 위해 44px 박스 사용 */
+.biz-topbar__toggle {
+  @apply inline-flex items-center justify-center w-[4.4rem] h-[4.4rem] -mr-[0.6rem]
+         rounded-[999px] text-[var(--color-text-inverse)] bg-transparent border-0 cursor-pointer;
+}
+
+.biz-topbar__toggle:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-text-inverse)_16%,transparent)];
+}
+
+/* ─── 사이드바 / 드로어 ─── */
+.biz-sidebar {
+  @apply fixed inset-y-0 left-0 z-50 flex flex-col w-[26rem] max-w-[82vw]
+         bg-[var(--color-brand-primary-dark)] text-[var(--color-text-inverse)]
+         -translate-x-full transition-transform duration-200 ease-out
+         pc:static pc:z-auto pc:w-[26rem] pc:max-w-none pc:translate-x-0 pc:shrink-0
+         pc:rounded-r-[2.4rem];
+}
+
+.biz-sidebar--expanded {
+  @apply translate-x-0;
+}
+
+/* Figma 정본: 로고 189px가 상단에 바로 붙고(top 0) BIZ 필이 로고 하단에 밀착 */
+.biz-sidebar__head {
+  @apply flex flex-col items-center gap-0 pt-0 pb-[2.4rem] px-[2rem] text-center;
+}
+
+/* logo-pc.png — 마크 + "감성미식" 워드마크 포함 정사각 로고 (Figma 189×189) */
+.biz-sidebar__mark {
+  @apply block w-[18.9rem] h-auto;
+}
+
+/* Figma 정본: 146×38 필, 세이지 그린 배경, 22px EBK, 자간 -1px */
+.biz-sidebar__badge {
+  @apply inline-flex items-center justify-center w-[14.6rem] h-[3.8rem] rounded-[999px]
+         bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)]
+         text-[2.2rem] font-[900] tracking-[-0.1rem] leading-none;
+}
+
+.biz-sidebar__nav {
+  @apply flex-1 px-[1.2rem] pt-[2.4rem] pb-[0.8rem];
+}
+
+.biz-sidebar__list {
+  @apply flex flex-col gap-0 list-none m-0 p-0;
+}
+
+/* Figma 정본: 행높이 52px, 18px 볼드, 순백 텍스트, 아이콘 24px 간격 16px */
+.biz-sidebar__link {
+  @apply flex items-center gap-[1.6rem] min-h-[5.2rem] px-[2.4rem] rounded-[1rem]
+         text-[1.8rem] font-[700] text-[var(--color-text-inverse)]
+         no-underline;
+}
+
+.biz-sidebar__link:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-text-inverse)_12%,transparent)];
+}
+
+.biz-sidebar__link--current {
+  @apply bg-[color-mix(in_srgb,var(--color-text-inverse)_16%,transparent)];
+}
+
+.biz-sidebar__icon {
+  @apply block w-[2.4rem] h-[2.4rem] shrink-0;
+}
+
+/* 드로어 백드롭 (모바일·태블릿 전용) */
+.biz-scrim {
+  @apply fixed inset-0 z-40 bg-[var(--color-brand-overlay-scrim)] opacity-0 invisible
+         transition-opacity duration-200 pc:hidden;
+}
+
+.biz-scrim--expanded {
+  @apply opacity-100 visible;
+}
+
+/* ─── 콘텐츠 영역 ─── */
+.biz-content {
+  @apply flex flex-col min-w-0 flex-1;
+}
+
+/* Figma 정본: 콘텐츠 컬럼 900px, 모바일 좌우 24px(스탯 그리드만 20px), 모바일 상단 여백 16px.
+   flex-col로 푸터를 하단에 민다 */
+.biz-content__inner {
+  @apply flex flex-col flex-1 w-full max-w-[90rem] mx-auto px-[2rem] pt-[1.6rem] pb-[2.4rem]
+         pc:px-[0] pc:pt-[4rem] pc:pb-[4rem];
+}
+
+/* page shell 계약(main>section>.container) 충족용 래퍼.
+   biz 콘텐츠 영역에선 폭·정렬·좌우 패딩을 상위 .biz-content__inner가 담당하므로
+   내부 .container는 box를 만들지 않는 투명 pass-through로 둔다(레이아웃·간격 100% 보존). */
+.biz-content__inner .container {
+  display: contents;
+}
+
+/* 브레드크럼 — Figma 정본: 모바일 14px / PC 16px, 전부 #222 레귤러 */
+.biz-breadcrumb {
+  @apply flex justify-end mb-[2rem] text-[1.4rem] text-[var(--color-brand-text)]
+         pc:text-[1.6rem] pc:mb-[4.1rem];
+}
+
+.biz-breadcrumb__list {
+  @apply flex items-center gap-[0.6rem] list-none m-0 p-0;
+}
+
+.biz-breadcrumb__sep {
+  @apply text-[var(--color-brand-text)];
+}
+
+/* 시각 행높이 16px 유지, 터치 영역 상하 1.5rem 확장으로 44px 이상 확보 */
+.biz-breadcrumb__link {
+  @apply relative text-[var(--color-brand-text)] no-underline;
+}
+
+.biz-breadcrumb__link::after {
+  content: '';
+
+  @apply absolute inset-x-0 -inset-y-[1.5rem];
+}
+
+.biz-breadcrumb__link:hover {
+  @apply underline;
+}
+
+.biz-breadcrumb__current {
+  @apply font-[400] text-[var(--color-brand-text)];
+}
+
+/* ─── 스탯 카드 ─── */
+
+/* Figma 정본: 모바일 gap 10px·컬럼 20px 기준(-0.4rem 로 24px 패딩 보정), PC gap 20px */
+.stat-grid {
+  @apply grid grid-cols-2 gap-[1rem] list-none m-0 p-0 mb-[3rem] -mx-[0.4rem]
+         pc:grid-cols-4 pc:gap-[2rem] pc:mb-[4rem] pc:mx-0;
+}
+
+/* Figma 정본: 모바일 155×118, PC 210×157 — 아이콘+숫자 가로 행, 라벨 하단 중앙.
+   hover 시 카드가 살짝 확대되어 클릭 가능함을 표시 */
+.stat-card {
+  @apply rounded-[1.6rem] bg-[var(--color-surface)]
+         transition-transform duration-150 ease-out;
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+.stat-card:hover {
+  @apply scale-[1.03];
+}
+
+/* 카드 전체 링크 — 게시이력(sub6)으로 이동. 카드 내부 레이아웃·크기는 링크가 담당 */
+.stat-card__link {
+  @apply flex flex-col items-center justify-center gap-[2rem] h-full min-h-[11.8rem] p-[2rem]
+         text-center no-underline
+         pc:min-h-[15.7rem] pc:gap-[2.5rem];
+}
+
+.stat-card__top {
+  @apply flex items-center gap-[1rem] pc:gap-[1.2rem];
+}
+
+.stat-card__icon {
+  @apply hidden w-[5.4rem] h-[5.4rem] shrink-0 text-[var(--color-brand-primary)] pc:block;
+}
+
+/* Figma 정본: 모바일 38px / PC 52px, EBK(800), 딥틸 #235952 */
+.stat-card__value {
+  @apply text-[3.8rem] font-[900] leading-none text-[var(--color-brand-primary-dark)] pc:text-[5.2rem];
+}
+
+/* Figma 정본: 모바일 14px / PC 16px 볼드, 본문색 #222 */
+.stat-card__label {
+  @apply text-[1.4rem] font-[700] text-[var(--color-brand-text)] pc:text-[1.6rem];
+}
+
+/* ─── 주 CTA ─── */
+
+/* Figma 정본: 모바일 56px·16px / PC 66px·22px, radius 16px, PC만 그림자 */
+.cta-create {
+  @apply flex items-center justify-center w-full min-h-[5.6rem] mb-[3rem] px-[2rem]
+         rounded-[1.6rem] bg-[var(--color-brand-primary-dark)] text-[var(--color-text-inverse)]
+         text-[1.6rem] font-[700] border-0 cursor-pointer no-underline
+         pc:min-h-[6.6rem] pc:text-[2.2rem] pc:mb-[4rem];
+
+  @media (min-width: 1280px) {
+    box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+  }
+}
+
+.cta-create:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary-dark)_88%,black)];
+}
+
+/* ─── 섹션 공통 ─── */
+.biz-section {
+  @apply mb-[2rem] pc:mb-[3.2rem];
+}
+
+/* PC 전용 섹션 — 모바일·태블릿 숨김 (sub7 연동 안내 등 모바일 시안에 없는 블록) */
+.biz-section--pc {
+  @apply hidden pc:block;
+}
+
+/* Figma 정본: 모바일 18px/행간 24px·아래 15px, PC 26px/행간 32px·아래 20px */
+.biz-section__title {
+  @apply text-[1.8rem] leading-[2.4rem] font-[700] text-[var(--color-brand-text)] mb-[1.5rem]
+         pc:text-[2.6rem] pc:leading-[3.2rem] pc:mb-[2rem];
+}
+
+/* PC에서 SNS 연동 + 인기키워드 2열 (Figma: 440+440, gap 20) */
+
+/* 세로 간격은 grid gap이 담당(모바일 SNS→키워드 30px). 블록→다음 섹션 간격은
+   컨테이너 mb가 담당. 내부 .biz-section의 mb를 살리면 gap과 이중 적용돼 60px이 됨 */
+.biz-cols {
+  @apply grid grid-cols-1 gap-[3rem] mb-[3rem] pc:grid-cols-2 pc:gap-[2rem] pc:mb-[3.2rem];
+}
+
+.biz-cols > .biz-section {
+  @apply mb-0;
+}
+
+/* ─── SNS 연동 상태 ─── */
+.sns-list {
+  @apply flex flex-col gap-[1rem] list-none m-0 p-0 pc:flex-row pc:gap-[2rem];
+}
+
+/* Figma 정본: 모바일 312×54 가로 행, PC 210×105 컴팩트 카드 — 아이콘 좌측, 이름/칩 세로 스택.
+   흰 카드에만 그림자, 연결됨(세이지) 카드는 그림자 없음 */
+.sns-item {
+  @apply flex items-center gap-[1.2rem] min-h-[5.4rem] px-[1rem] py-[1rem]
+         rounded-[1.6rem] bg-[var(--color-surface)]
+         pc:grid pc:grid-cols-[4rem_auto] pc:gap-x-[1.2rem] pc:gap-y-[1rem]
+         pc:w-[21rem] pc:min-h-[10.5rem] pc:px-[2rem] pc:py-[0rem] pc:content-center;
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+.sns-item--connected {
+  @apply bg-[var(--color-brand-surface-muted)];
+
+  box-shadow: none;
+}
+
+/* Figma 정본: 아이콘 모바일 28px / PC 40px.
+   기본(미연결) 로고는 surface-muted(#e8ede3) 회색으로 흐림 처리.
+   text-*가 곧 ico-sns 로고 색 — 아래 --connected 규칙이 색을 전환한다 */
+.sns-item__icon {
+  @apply flex items-center justify-center w-[2.8rem] h-[2.8rem] shrink-0 rounded-[1rem]
+         bg-transparent text-[var(--color-brand-surface-muted)]
+         pc:w-[4rem] pc:h-[4rem] pc:row-span-2;
+}
+
+/* 연결됨 상태에서만 로고에 brand-primary(#5a928b) 적용 */
+.sns-item--connected .sns-item__icon {
+  @apply text-[var(--color-brand-primary)];
+}
+
+/* 로고 아이콘(ico-sns) — 컨테이너에 맞춰 스케일, 색은 currentColor 상속 */
+.sns-item__icon .ico-sns {
+  @apply block w-full h-full;
+}
+
+/* Figma 정본: 모바일 16px / PC 20px 볼드 */
+.sns-item__name {
+  @apply flex-1 text-[1.6rem] font-[700] text-[var(--color-brand-text)]
+         pc:flex-none pc:col-start-2 pc:text-[2rem];
+}
+
+/* 상태 칩 공용(.sns-item__state) — 클래스 하나로 통일, 색은 카드 루트가 결정.
+   기본(미연결) = 연결하기 링크: Figma 정본 99×34, radius 10px, 딥틸 배경 + 흰 16px */
+.sns-item__state {
+  @apply relative inline-flex items-center justify-center min-w-[9.9rem] min-h-[3.4rem] px-[1rem]
+         rounded-[1rem] bg-[var(--color-brand-primary-dark)] text-[var(--color-text-inverse)]
+         text-[1.6rem] font-[400] leading-none border-0 cursor-pointer no-underline
+         pc:col-start-2 pc:justify-self-start;
+}
+
+/* 연결됨 카드 — Figma 정본 86×34 세이지 라벨로 자동 전환
+   (명암비 3.55:1 — Figma 원본값 유지, AA 미달 항목으로 보고) */
+.sns-item--connected .sns-item__state {
+  @apply min-w-[8.6rem] bg-[var(--color-brand-primary)] cursor-default;
+}
+
+/* 링크(연결하기)일 때만 — 시각 높이 34px 유지, ::before로 터치 영역 44px 확보 + hover */
+a.sns-item__state::before {
+  content: '';
+  position: absolute;
+  inset: -0.5rem;
+}
+
+a.sns-item__state:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary-dark)_88%,black)];
+}
+
+/* ─── 실시간 인기키워드 ─── */
+
+/* Figma 정본: 모바일·PC 모두 흰 카드(모바일 312×94, PC 440×105) 안 텍스트 해시태그 */
+.keyword-list {
+  @apply flex flex-wrap content-center gap-x-[1rem] gap-y-[1rem] list-none m-0 p-[2rem]
+         rounded-[1.6rem] bg-[var(--color-surface)] min-h-[9.4rem]
+         pc:min-h-[10.5rem] pc:gap-x-[1rem] pc:px-[3rem] pc:py-[2.5rem];
+}
+
+/* Figma 정본: 모바일 16px / PC 18px 볼드, 세이지 그린 #5a928b, 행간 22px.
+   (흰 배경 대비 3.55:1 — Figma 원본값 유지, AA 미달 항목으로 보고) */
+.keyword-list__item {
+  @apply text-[1.6rem] font-[700] leading-[2.2rem] text-[var(--color-brand-primary)]
+         pc:text-[1.8rem];
+}
+
+/* ─── 다가오는 예약 게시 ─── */
+
+/* Figma 정본: 모바일 312×214 / PC 900×152 흰 카드, radius 16px, 그림자 없음.
+   내부 여백 모바일 20px / PC 30px = 카드 패딩 + 아이템 패딩 합 */
+.schedule {
+  @apply py-[2rem] px-[2rem] rounded-[1.6rem] bg-[var(--color-surface)]
+         pc:py-[3rem] pc:px-[3rem];
+}
+
+.schedule__list {
+  @apply flex flex-col list-none m-0 p-0 gap-[2rem];
+}
+
+.schedule__item {
+  @apply block;
+}
+
+/* 행 전체 링크 — 콘텐츠 등록/예약(sub5)으로 이동. 행 레이아웃은 링크가 담당 */
+.schedule__link {
+  @apply relative flex flex-wrap items-center gap-x-[1rem] gap-y-[0.4rem]
+         no-underline pc:flex-nowrap;
+}
+
+/* 행 시각 높이 유지 — ::after 상하 0.9rem 확장으로 터치 영역 44px 이상 확보
+   (행 간격 20px 안에서 이웃 행과 겹침 없음: 9+9=18 < 20) */
+.schedule__link::after {
+  content: '';
+
+  @apply absolute inset-x-0 -inset-y-[0.9rem];
+}
+
+.schedule__link:hover .schedule__title {
+  @apply underline;
+}
+
+
+
+/* 스마트예약 배지 — Figma 정본: 모바일 77×26·12px / PC 96×30·14px, radius 10px,
+   세이지 그린 배경 + 흰 텍스트 (명암비 AA 미달 항목으로 보고) */
+.schedule__tag {
+  @apply inline-flex items-center justify-center min-w-[7.7rem] min-h-[2.6rem] px-[0.8rem]
+         rounded-[1rem] bg-[var(--color-brand-primary)] text-[1.2rem] font-[400] leading-none
+         text-[var(--color-text-inverse)]
+         pc:min-w-[9.6rem] pc:min-h-[3rem] pc:text-[1.4rem];
+}
+
+/* Figma 정본: 모바일 16px / PC 18px 볼드 */
+.schedule__title {
+  @apply flex-1 min-w-[60%] text-[1.6rem] font-[700] text-[var(--color-brand-text)] truncate pc:min-w-0
+         pc:text-[1.8rem];
+}
+
+/* Figma 정본: 모바일 14px / PC 16px, #666 */
+.schedule__date {
+  @apply w-full text-[1.4rem] text-[var(--color-brand-text-muted)] tabular-nums
+         pc:w-auto pc:text-right pc:shrink-0 pc:text-[1.6rem];
+}
+
+/* ─── 푸터 ─── */
+
+/* Figma 정본 보더 #ccc = icon-subtle. mt-auto로 짧은 페이지에서도 하단 고정 */
+.biz-footer {
+  @apply mt-auto border-t border-[var(--color-brand-icon-subtle)] pt-[2rem] pb-[4rem]
+  pc:max-w-[90rem] pc:w-full pc:mx-auto ;
+}
+
+.biz-footer__inner {
+  @apply w-full max-w-[112rem] mx-auto px-[1.6rem] flex flex-col items-center gap-[2.4rem]
+         text-center tablet:px-[2.4rem] pc:px-[4rem];
+}
+
+.biz-footer__links {
+  @apply flex flex-wrap justify-center items-center gap-x-[2rem] gap-y-[0.8rem] list-none m-0 p-0;
+}
+
+/* Figma 정본: 모바일 14px / PC 16px 볼드, #5c635d, 자간 0.5px
+   시각 행높이 21px 유지, 터치 영역 상하 1.2rem 확장으로 44px 확보 */
+.biz-footer__link {
+  @apply relative inline-flex items-center text-[1.4rem] font-[700] tracking-[0.05rem]
+         text-[var(--color-brand-text-secondary)] no-underline pc:text-[1.6rem];
+}
+
+.biz-footer__link::after {
+  content: '';
+
+  @apply absolute inset-x-0 -inset-y-[1.2rem];
+}
+
+.biz-footer__link:hover {
+  @apply underline;
+}
+
+/* Figma 정본: 모바일 12px / PC 14px, #5c635d */
+.biz-footer__copy {
+  @apply text-[1.2rem] text-[var(--color-brand-text-secondary)] pc:text-[1.4rem];
+}
+
+/* 모션 감소 설정 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .biz-sidebar,
+  .biz-scrim,
+  .stat-card {
+    @apply transition-none;
+  }
+
+  .stat-card:hover {
+    @apply scale-100;
+  }
+}

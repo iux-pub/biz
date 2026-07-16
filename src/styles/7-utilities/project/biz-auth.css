@@ -1,0 +1,295 @@
+/**
+ * 감성미식 BIZ — 인증 화면 (로그인 sub.html / 회원가입 sub2.html)
+ *
+ * 기준: Figma 로그인 Mobile 32:790 / PC 32:846, 회원가입 Mobile 32:1261 / PC 32:1276.
+ * 세이지(surface-muted) 전면 배경 + 중앙 브랜드 로고 + 라운드 폼.
+ * 색상은 전부 --color-brand-* / KRDS 시맨틱 토큰. raw hex 미사용.
+ */
+
+/* ─── 페이지 셸 ─── */
+
+/* Figma: 콘텐츠 상단 오프셋 Mobile 70px / PC 40px, 좌우 20px. PC도 상단 정렬 */
+.auth {
+  @apply flex flex-col items-center min-h-screen px-[2rem] pt-[7rem] pb-[6rem]
+         bg-[var(--color-brand-surface-muted)] text-[var(--color-brand-text)]
+         pc:pt-[4rem] pc:pb-[4rem];
+}
+
+/* page shell 계약(main>section>.container) 충족용 래퍼.
+   인증 화면은 중앙 정렬 flex 레이아웃이라, 섹션/컨테이너가 box를 만들면 flex 아이템이 바뀐다.
+   display:contents로 두어 브랜드/폼/링크가 그대로 main의 flex 아이템이 되게 한다(레이아웃 100% 보존).
+   단 .auth-modal(회원가입 카드)은 실제 박스이므로 안쪽 .container만 중립화한다. */
+.auth > section,
+.auth .container,
+.auth-modal .container {
+  display: contents;
+}
+
+/* ─── 브랜드 영역 ─── */
+
+/* Figma: 로고 박스와 BIZ 배지는 간격 0(로고 이미지 내부 여백 포함),
+   배지 하단 → 첫 라벨 간격 Mobile 60px / PC 70px */
+.auth__brand {
+  @apply flex flex-col items-center gap-0 m-0 mb-[6rem] pc:mb-[7rem];
+}
+
+/* logo-login.png — 다크 틸 마크 + 워드마크 (밝은 배경용). Figma: Mobile 189px / PC 240px */
+.auth__logo {
+  @apply block w-[18.9rem] h-auto pc:w-[24rem];
+}
+
+/* Figma: 146x38, 22px EBK(800), 자간 -1px */
+.auth__badge {
+  @apply inline-flex items-center justify-center min-w-[14.6rem] min-h-[3.8rem] rounded-[999px]
+         bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)]
+         text-[2.2rem] font-[800] leading-none tracking-[-0.1rem];
+}
+
+/* ─── 폼 ─── */
+
+/* Figma: 폼 너비 Mobile 320px / PC 470px, 필드 간 간격 20px */
+.auth__form {
+  @apply flex flex-col w-full max-w-[32rem] gap-[2rem] pc:max-w-[47rem];
+}
+
+/* Figma: 라벨 하단 → 인풋 상단 20px */
+.auth__field {
+  @apply flex flex-col gap-[2rem];
+}
+
+.auth__label {
+  @apply text-[1.8rem] font-[700] leading-none text-[var(--color-brand-text)]
+         pc:text-[2rem];
+}
+
+/* Figma: 높이 Mobile 54px / PC 66px, 텍스트 중앙 정렬 20px/22px Bold */
+.auth__input {
+  @apply w-full h-[5.4rem] px-[2rem] rounded-[1.6rem] border border-[transparent]
+         bg-[var(--color-surface)] text-[2rem] font-[700] text-center text-[var(--color-brand-text)]
+         pc:h-[6.6rem] pc:text-[2.2rem];
+}
+
+.auth__input::placeholder {
+  @apply text-[var(--color-brand-text-subtle)];
+}
+
+.auth__input:focus {
+  @apply border-[var(--color-brand-primary)];
+}
+
+/* Figma: 높이 Mobile 54px / PC 66px, 텍스트 18px/22px, 위 간격 20px(폼 gap) */
+.auth__submit {
+  @apply flex items-center justify-center w-full h-[5.4rem] rounded-[1.6rem]
+         bg-[var(--color-brand-primary-dark)] text-[var(--color-text-inverse)]
+         text-[1.8rem] font-[700] border-0 cursor-pointer
+         pc:h-[6.6rem] pc:text-[2.2rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+.auth__submit:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary-dark)_88%,black)];
+}
+
+/* ─── 하단 링크 ─── */
+
+/* Figma: 버튼 하단 → 링크 텍스트 상단 40px. 링크 터치 영역 44px 내 22px 행이
+   중앙 정렬되어 텍스트 위로 11px이 생기므로 40-11=29px로 보정. 링크 간격 24px */
+.auth__links {
+  @apply flex items-center justify-center gap-[2.4rem] mt-[2.9rem];
+}
+
+/* Figma 모바일 원본은 inverse(흰색)지만 세이지 배경 위 대비 1.2:1로 판독 불가
+   → muted 텍스트 사용 (WCAG 1.4.3). PC는 Figma대로 text-default(#222)
+   a(페이지 이동)와 button(모달 트리거) 겸용 — 버튼 UA 스타일 중립화 */
+.auth__link {
+  @apply inline-flex items-center min-h-[4.4rem] p-0 border-0 bg-transparent cursor-pointer
+         text-[1.6rem] leading-[2.2rem]
+         text-[var(--color-brand-text)] no-underline
+         pc:text-[1.8rem];
+}
+
+.auth__link:hover {
+  @apply underline text-[var(--color-brand-text)];
+}
+
+/* ─── 회원가입 모달 (sub2.html) ─── */
+
+/* 스크림+블러 배경, 모달 상단 오프셋 Mobile 201px / PC 210px.
+   페이지 바탕은 Figma대로 Mobile 웜샌드 / PC 흰색 */
+.auth-modal-page {
+  @apply flex flex-col items-center min-h-screen px-[2rem] pt-[20.1rem] pb-[10rem]
+         bg-[var(--color-brand-bg)] pc:pt-[21rem] pc:pb-[4rem] pc:bg-[var(--color-surface)];
+}
+
+.auth-modal-page::before {
+  content: '';
+
+  @apply fixed inset-0 bg-[var(--color-brand-overlay-scrim)] backdrop-blur-[7.5px] pointer-events-none;
+}
+
+/* 로그인 페이지(sub.html) 모달 조합 — 카탈로그 .modal__overlay(z-1040)보다
+   카드가 위에 오도록 명시 (.auth-modal은 relative라 z-index 적용 가능) */
+.modal .auth-modal {
+  @apply z-[1050];
+}
+
+/* Figma: 카드 너비 Mobile 320px / PC 470px, 패딩 Mobile 20px / PC 30px */
+.auth-modal {
+  @apply relative w-full max-w-[32rem] p-[2rem] rounded-[1.6rem]
+         bg-[var(--color-surface)] text-[var(--color-brand-text)]
+         pc:max-w-[47rem] pc:p-[3rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+/* Figma: 44x44, 아이콘 24px, 오프셋 Mobile 10px / PC 30px
+   a(sub2 페이지)와 button(sub 모달) 겸용 — 버튼 UA 스타일 중립화 */
+.auth-modal__close {
+  @apply absolute top-[1rem] right-[1rem] flex items-center justify-center w-[4.4rem] h-[4.4rem]
+         p-0 border-0 cursor-pointer
+         rounded-[999px] bg-[var(--color-brand-bg)] text-[var(--color-brand-text)] no-underline
+         text-[2.4rem] leading-none
+         pc:top-[3rem] pc:right-[3rem];
+}
+
+.auth-modal__close:hover {
+  @apply bg-[var(--color-brand-surface-muted)];
+}
+
+/* Figma: Mobile 20px EBK(800) / PC 26px, 행간 32px */
+.auth-modal__title {
+  @apply m-0 text-[2rem] font-[800] leading-none
+         pc:text-[2.6rem] pc:leading-[3.2rem];
+}
+
+/* Figma: 제목 아래 Mobile 10px / PC 12px, Mobile 16px / PC 18px */
+.auth-modal__subtitle {
+  @apply m-0 mt-[1rem] text-[1.6rem] leading-none text-[var(--color-brand-primary-dark)]
+         pc:mt-[1.2rem] pc:text-[1.8rem];
+}
+
+/* Figma: 필드 간 간격 20px, 라벨→인풋 Mobile 10px / PC 20px */
+.auth-modal__field {
+  @apply flex flex-col gap-[1rem] mt-[2rem] border-0 m-0 min-w-0 p-0
+         pc:gap-[2rem];
+}
+
+/* Figma: 부제 하단 → 첫 라벨 30px */
+.auth-modal__field:first-child {
+  @apply mt-[3rem];
+}
+
+.auth-modal__label {
+  @apply block p-0 text-[1.8rem] font-[700] leading-none text-[var(--color-brand-text)]
+         pc:text-[2rem];
+}
+
+/* 라벨 행 — 라벨 좌 + 보조 문구 우 (Figma 275:216: 이메일 필드) */
+.auth-modal__label-row {
+  @apply flex items-baseline justify-between gap-[1rem];
+}
+
+/* Figma 275:217: 16px, brand-primary(#5a928b), 우측 정렬 */
+.auth-modal__label-note {
+  @apply text-[1.6rem] leading-none text-[var(--color-brand-primary)];
+}
+
+/* Figma: 높이 Mobile 54px / PC 66px, 텍스트 중앙 정렬 20px/22px Bold */
+.auth-modal__input {
+  @apply w-full h-[5.4rem] px-[2rem] rounded-[1.6rem] border border-[transparent]
+         bg-[var(--color-brand-surface-muted)] text-[2rem] font-[700] text-center text-[var(--color-brand-text)]
+         pc:h-[6.6rem] pc:text-[2.2rem];
+}
+
+.auth-modal__input::placeholder {
+  @apply text-[var(--color-brand-text-subtle)];
+}
+
+.auth-modal__input:focus {
+  @apply border-[var(--color-brand-primary)];
+}
+
+/* 업종 칩 — 라디오 그룹 (3단계, input sibling 패턴, has 셀렉터 미사용)
+   Figma: 높이 Mobile 42px / PC 52px, 패딩 Mobile 15px / PC 20px, 텍스트 14px/16px */
+.auth-modal__chips {
+  @apply flex flex-wrap gap-[1rem];
+}
+
+/* fieldset의 legend는 flex 아이템이 아니라 부모 gap이 적용되지 않음
+   → Figma 간격(라벨→칩 Mobile 10px / PC 20px)을 margin-top으로 직접 부여 */
+.auth-modal__field > .auth-modal__chips {
+  @apply mt-[1rem] pc:mt-[2rem];
+}
+
+.auth-modal__chip {
+  @apply relative inline-flex items-center justify-center h-[4.2rem] px-[1.5rem] rounded-[1.6rem]
+         border border-[transparent]
+         bg-[var(--color-brand-bg)] text-[1.4rem] text-[var(--color-brand-text-primary-light)]
+         cursor-pointer
+         pc:h-[5.2rem] pc:px-[2rem] pc:text-[1.6rem];
+}
+
+/* 시각 높이는 Figma대로 42px 유지, 터치 영역은 상하 1px 확장으로 44px 확보 */
+.auth-modal__chip::after {
+  content: '';
+
+  @apply absolute inset-x-0 top-[-0.1rem] bottom-[-0.1rem];
+}
+
+.auth-modal__chip-input:checked + .auth-modal__chip {
+  @apply bg-[var(--color-brand-primary)] border-[var(--color-brand-primary)]
+         text-[var(--color-text-inverse)] font-[700];
+}
+
+.auth-modal__chip-input:focus-visible + .auth-modal__chip {
+  outline: 0.4rem solid var(--color-border-primary);
+  outline-offset: 2px;
+}
+
+/* 국세청 확인 행 (2단계) — 체크 아이콘 + 문구 중앙 정렬
+   Figma 276:286: Mobile 14px / PC 18px B, primary-dark */
+.auth-modal__verify {
+  @apply flex items-center justify-center gap-[0.8rem] m-0 mt-[1.7rem]
+         text-[1.4rem] font-[700] leading-none text-[var(--color-brand-primary-dark)]
+         pc:mt-[2rem] pc:text-[1.8rem];
+}
+
+.auth-modal__verify-icon {
+  @apply w-[2rem] h-[2rem] shrink-0 pc:w-[2.4rem] pc:h-[2.4rem];
+}
+
+/* 인라인 버튼 행 (상호명 중복확인 / 사업자번호 진위확인 / 주소 검색) — Figma: 인풋과 버튼 간격 10px */
+.auth-modal__row {
+  @apply flex gap-[1rem];
+}
+
+.auth-modal__row .auth-modal__input {
+  @apply flex-1 min-w-0;
+}
+
+/* 중복확인 버튼 — Figma 275:206: Mobile 68x54 / PC 80x66, r16, primary + 흰 16px/18px */
+.auth-modal__search {
+  @apply shrink-0 flex items-center justify-center min-w-[6.8rem] h-[5.4rem] rounded-[1.6rem]
+         bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)]
+         text-[1.6rem] font-[700] border-0 cursor-pointer
+         pc:min-w-[8rem] pc:h-[6.6rem] pc:text-[1.8rem];
+}
+
+.auth-modal__search:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary)_88%,black)];
+}
+
+/* Figma 32:1388: 위 간격 20px, 높이 54px/66px, 텍스트 18px B (Mobile·PC 동일) */
+.auth-modal__submit {
+  @apply flex items-center justify-center w-full h-[5.4rem] mt-[2rem] rounded-[1.6rem]
+         bg-[var(--color-brand-primary-dark)] text-[var(--color-text-inverse)]
+         text-[1.8rem] font-[700] border-0 cursor-pointer
+         pc:h-[6.6rem] text-[2.2rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+.auth-modal__submit:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary-dark)_88%,black)];
+}

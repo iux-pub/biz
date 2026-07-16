@@ -1,0 +1,420 @@
+/**
+ * 감성미식 BIZ — 콘텐츠 생성 (sub3.html / sub4.html / sub5.html)
+ *
+ * 기준: Figma 콘텐츠 생성 Mobile 32:1172 / PC 32:1097 (+ 생성2·3 프레임 공용 블록).
+ * 대시보드 셸(biz-main.css)을 재사용하고 콘텐츠 블록만 추가한다.
+ * 색상은 전부 --color-brand-* / KRDS 시맨틱 토큰. raw hex 미사용.
+ */
+
+/* ─── 스텝 인디케이터 ─── */
+.biz-steps {
+  @apply flex gap-[1rem] p-[1rem] mb-[3rem] rounded-[1.6rem] bg-[var(--color-surface)]
+         list-none m-0 pc:mb-[2.4rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-brand-primary-dark) 8%, transparent);
+}
+
+.biz-steps__item {
+  @apply flex items-center gap-[1rem] min-h-[5.2rem] px-[0.9rem] rounded-[1rem]
+         bg-[var(--color-brand-bg)] text-[var(--color-brand-text)]
+         pc:flex-1 pc:min-h-[6.6rem] pc:px-[1rem] pc:gap-[2rem];
+}
+
+.biz-steps__item--current {
+  @apply flex-1 bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)] pc:flex-1;
+}
+
+.biz-steps__num {
+  @apply flex items-center justify-center w-[3.4rem] h-[3.4rem] shrink-0 rounded-[999px]
+         bg-[var(--color-brand-overlay-scrim)] text-[1.6rem] font-[800] leading-none
+         pc:w-[4.6rem] pc:h-[4.6rem] pc:text-[2.2rem];
+}
+
+/* 모바일에선 현재 단계만 라벨 노출, PC에선 전부 노출 */
+.biz-steps__label {
+  @apply hidden text-[1.6rem] font-[700] whitespace-nowrap pc:block pc:text-[2.2rem];
+}
+
+.biz-steps__item--current .biz-steps__label {
+  @apply block font-[900];
+}
+
+/* ─── 사업장 정보 카드 ─── */
+.store-card {
+  @apply p-[2rem] mb-[3rem] rounded-[1.6rem] bg-[var(--color-surface)]
+         text-[var(--color-brand-text-primary-light)] pc:p-[3rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-brand-primary-dark) 8%, transparent);
+}
+
+.store-card__title {
+  @apply m-0 mb-[1.8rem] text-[2.6rem] font-[800] leading-[1.25] tracking-[-0.04em]
+         pc:text-[3.6rem];
+}
+
+/* Figma: Mobile은 dt 위 / dd 아래 세로 스택(dt→dd 10px, 그룹 간 20px),
+   PC는 dt·dd 한 줄(7rem 라벨 컬럼 그리드) */
+.store-card__meta {
+  @apply m-0 text-[1.6rem] leading-[1.4] tracking-[-0.03em]
+         pc:grid pc:grid-cols-[7rem_1fr] pc:gap-y-[1rem] pc:text-[1.8rem];
+}
+
+.store-card__meta dt {
+  @apply font-[700] mb-[1rem] pc:mb-0;
+}
+
+.store-card__meta dd {
+  @apply m-0;
+}
+
+.store-card__meta dd + dt {
+  @apply mt-[2rem] pc:mt-0;
+}
+
+/* ─── 폼 섹션 공통 ─── */
+.create-field {
+  @apply mb-[2.8rem] border-0 m-0 min-w-0 p-0 pc:mb-[4rem];
+}
+
+.create-label {
+  @apply block p-0 mb-[2rem] text-[1.8rem] font-[700] leading-none text-[var(--color-brand-text)]
+         pc:text-[2.6rem];
+}
+
+/* ─── 사진 업로드 ─── */
+.photo-grid {
+  @apply flex flex-wrap gap-[2rem] pl-[0rem];
+}
+
+.photo-item {
+  @apply relative w-[calc(50%-1rem)] h-[15rem] pc:w-[15.5rem] pc:h-[15.5rem];
+}
+
+.photo-item__img {
+  @apply block w-full h-full object-cover rounded-[1.6rem];
+}
+
+.photo-item__remove {
+  @apply absolute top-0 right-0 flex items-center justify-center w-[4.4rem] h-[4.4rem]
+         rounded-[999px] border-0 cursor-pointer bg-[var(--color-surface)]
+         text-[2rem] leading-none text-[var(--color-brand-text)];
+}
+
+.photo-item__remove:hover {
+  @apply bg-[var(--color-gray-20)];
+}
+
+.photo-add {
+  @apply flex flex-col items-center justify-center gap-[1.4rem] w-full h-[15rem]
+         rounded-[1.6rem] border-0 cursor-pointer bg-[var(--color-surface)]
+         text-[1.6rem] font-[700] text-[var(--color-brand-text)]
+         pc:w-[15.5rem] pc:h-[15.5rem];
+
+  box-shadow: 0 0.8rem 1.8rem color-mix(in srgb, var(--color-brand-primary-dark) 8%, transparent);
+}
+
+.photo-add:hover {
+  @apply bg-[var(--color-gray-20)];
+}
+
+.photo-add__icon {
+  @apply block w-[4.4rem] h-[4.4rem] pc:w-[4.6rem] pc:h-[4.6rem];
+}
+
+/* ─── 홍보 내용 텍스트영역 ─── */
+.create-textarea {
+  @apply block w-full min-h-[17rem] p-[2rem] rounded-[1.6rem] border border-[transparent]
+        bg-[var(--color-brand-surface-muted)] text-[1.5rem] leading-[1.6]
+        text-[var(--color-brand-text)] resize-y
+        pc:text-[18px] pc:p-[3rem];
+}
+
+.create-textarea::placeholder {
+  @apply text-[var(--color-brand-text-subtle)];
+}
+
+.create-textarea:focus {
+  @apply border-[var(--color-brand-primary)];
+}
+
+/* ─── 선택 칩 (글 분위기 라디오 / 배포 플랫폼 체크박스) ─── */
+.choice-chips {
+  @apply flex flex-wrap gap-[1rem];
+}
+
+.choice-chip {
+  @apply inline-flex items-center justify-center gap-[0.8rem] min-h-[4.4rem] px-[2.5rem]
+         rounded-[999px] bg-[var(--color-surface)] text-[1.6rem]
+         text-[var(--color-brand-text-primary-light)] cursor-pointer
+         pc:min-h-[5.2rem] pc:text-[1.8rem];
+}
+
+/* 체크 원형 아이콘 — 마크업의 Figma 체크 SVG(fill=currentColor)가 색을 상속.
+   기본 브랜드 프라이머리(#5a928b 토큰), 선택 시 inverse로 전환 */
+.choice-chip__check {
+  @apply flex items-center justify-center w-[2.4rem] h-[2.4rem] -ml-[0.8rem] rounded-[999px]
+        bg-[var(--color-gray-10)]
+        text-[var(--color-surface)];
+}
+
+.choice-chip__check svg {
+  @apply w-[1.5rem] shrink-0;
+}
+
+.choice-input:checked + .choice-chip {
+  @apply bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)] font-[700];
+}
+
+.choice-input:checked + .choice-chip .choice-chip__check {
+  @apply bg-[var(--color-brand-primary-dark)] text-[var(--color-brand-primary)];
+}
+
+.choice-input:focus-visible + .choice-chip {
+  outline: 0.4rem solid var(--color-border-primary);
+  outline-offset: 2px;
+}
+
+/* ─── 생성 상태 카드 ─── */
+
+/* Figma PC 44:136: 카드 패딩 30, 아이콘 60px(좌 60 지점), 아이콘↔본문 70,
+   제목 22px B, 노트 18px R(#222), 제목↔배지 20 */
+.gen-status {
+  @apply flex items-center gap-[1.7rem] p-[2rem] mt-[2rem] rounded-[1.6rem]
+         bg-[var(--color-brand-surface-muted)] pc:mt-[2.4rem] pc:p-[3rem] pc:gap-[7rem];
+}
+
+.gen-status__icon {
+  @apply block w-[4.6rem] h-[4.6rem] shrink-0 animate-spin pc:w-[6rem] pc:h-[6rem] pc:ml-[3rem];
+}
+
+.gen-status__body {
+  @apply flex flex-col items-start gap-[0.9rem] pc:gap-[2rem];
+}
+
+.gen-status__text {
+  @apply m-0 text-[1.6rem] font-[700] leading-none text-[var(--color-brand-text)] pc:text-[2.2rem];
+}
+
+.gen-status__note {
+  @apply hidden font-[400] text-[var(--color-brand-text)] pc:inline pc:text-[1.8rem] ml-[1rem];
+}
+
+/* 시각 높이 3.4rem 유지 + ::before로 터치 영역 44px 확장 (R-13) */
+.gen-status__later {
+  @apply relative flex items-center justify-center min-h-[3.4rem] px-[1.4rem] rounded-[1rem]
+         border-0 cursor-pointer bg-[var(--color-brand-primary-dark)]
+         text-[1.4rem] text-[var(--color-text-inverse)] pc:px-[2.5rem] pc:text-[1.6rem];
+}
+
+.gen-status__later::before {
+  content: '';
+
+  @apply absolute inset-x-0 -inset-y-[0.5rem];
+}
+
+.gen-status__later:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary-dark)_88%,black)];
+}
+
+/* ─── 미리보기 플랫폼 탭 (콘텐츠 생성2) ─── */
+.platform-tabs {
+  @apply flex gap-[1rem] mb-[2rem] pc:justify-center pc:mb-[2.4rem];
+}
+
+.platform-tabs__tab {
+  @apply flex-1 flex items-center justify-center gap-[1rem] min-h-[5.4rem] px-[1rem]
+         rounded-[1.6rem] bg-[var(--color-surface)] text-[1.6rem] font-[700]
+         text-[var(--color-brand-text)] cursor-pointer pc:flex-none pc:min-w-[15.5rem];
+}
+
+/* 아이콘 — text-*가 곧 ico-sns 로고 색. 평상시 회색, 선택 시 아래 규칙이 흰색으로 전환 */
+.platform-tabs__icon {
+  @apply block w-[3.4rem] h-[3.4rem] shrink-0 text-[var(--color-brand-icon-subtle)];
+}
+
+.choice-input:checked + .platform-tabs__tab .platform-tabs__icon {
+  @apply text-[var(--color-text-inverse)];
+}
+
+.choice-input:checked + .platform-tabs__tab {
+  @apply bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)];
+}
+
+.choice-input:focus-visible + .platform-tabs__tab {
+  outline: 0.4rem solid var(--color-border-primary);
+  outline-offset: 2px;
+}
+
+/* ─── 생성 결과 미리보기 카드 ─── */
+.preview-card {
+  @apply p-[2rem] mb-[2rem] rounded-[1.6rem] bg-[var(--color-surface)] pc:mb-[4rem];
+}
+
+.preview-card__img {
+  @apply block w-full aspect-square object-cover rounded-[1rem] mb-[3rem]
+         pc:w-full pc:h-auto pc:mb-[3.5rem];
+}
+
+.preview-card__text {
+  @apply m-0 mb-[1.6rem] text-[1.6rem] leading-[1.6] text-[var(--color-brand-text)]
+        whitespace-pre-line
+        pc:text-[1.8rem];
+}
+
+.preview-card__hint {
+  @apply text-[var(--color-brand-primary)];
+}
+
+/* 태그 목록 — 동적 추가 대비 ul/li. 기존 &ensp; 간격(≈0.5em)을 gap으로 재현 */
+.preview-card__tags {
+  @apply flex flex-wrap gap-x-[0.8rem] gap-y-[0.4rem] list-none m-0 p-0 mb-[2rem]
+         text-[1.6rem] font-[700] leading-[1.6]
+         text-[var(--color-brand-primary-dark)]
+         pc:text-[1.8rem];
+}
+
+.preview-card__tag-add {
+  @apply inline-flex items-center justify-center min-h-[4.4rem] px-[2.5rem] mb-[3rem]
+         rounded-[999px] border-0 cursor-pointer bg-[var(--color-brand-bg)]
+         text-[1.6rem] text-[var(--color-brand-text-primary-light)]
+         pc:text-[1.8rem] pc:mb-[4rem];
+}
+
+.preview-card__tag-add:hover {
+  @apply bg-[var(--color-brand-surface-muted)];
+}
+
+/* 본문 수정 / 다시 생성 / 업로드 CTA */
+.preview-card__actions {
+  @apply flex flex-col gap-[1rem] pc:grid pc:grid-cols-2 pc:gap-y-[2rem];
+}
+
+.action-soft {
+  @apply flex items-center justify-center gap-[1rem] min-h-[5.6rem] rounded-[1.6rem]
+         border-0 cursor-pointer bg-[var(--color-brand-bg)]
+         text-[1.6rem] font-[700] text-[var(--color-brand-primary-dark)]
+         pc:text-[2.2rem];
+}
+
+.action-soft:hover {
+  @apply bg-[var(--color-brand-surface-muted)];
+}
+
+.action-soft__icon {
+  @apply block w-[2.4rem] h-[2.4rem];
+}
+
+.preview-card__actions .cta-create {
+  @apply mb-0 pc:col-span-2;
+}
+
+/* ─── 플랫폼별 차이 안내 ─── */
+.info-note {
+  @apply flex items-start gap-[2rem] p-[2rem] rounded-[1.6rem]
+         bg-[var(--color-brand-surface-muted)]
+         pc:p-[3rem];
+}
+
+.info-note__icon {
+  @apply block w-[4rem] h-[4rem] shrink-0;
+}
+
+.info-note__title {
+  @apply m-0 mb-[1rem] text-[1.4rem] font-[700] leading-none text-[var(--color-brand-text)]
+  pc:text-[1.8rem];
+}
+
+.info-note__text {
+  @apply m-0 text-[1.4rem] leading-[1.6] text-[var(--color-brand-text)]
+  pc:text-[1.8rem];
+}
+
+/* ─── 게시 방식·시간 선택 (콘텐츠 생성3) ─── */
+
+/* 모바일 세로 스택 + 풀폭, PC 인라인 */
+.choice-chips--stack {
+  @apply flex-col pc:flex-row;
+}
+
+.choice-chips--stack .choice-chip {
+  @apply w-full pc:w-auto;
+}
+
+/* AI 추천 게시 시간 패널 */
+.ai-panel {
+  @apply p-[2rem] rounded-[1.6rem] bg-[var(--color-brand-surface-muted)];
+}
+
+.ai-panel__title {
+  @apply m-0 mb-[1.8rem] text-[1.6rem] font-[700] leading-none text-[var(--color-brand-text)];
+}
+
+/* 직접 일시 지정 입력 */
+.date-input {
+  @apply relative flex items-center w-full pc:max-w-[26.1rem];
+}
+
+.date-input__field {
+  @apply w-full h-[4.8rem] pl-[2rem] pr-[5.2rem] rounded-[999px] border border-[transparent]
+         bg-[var(--color-surface)] text-[1.6rem] text-[var(--color-brand-text)]
+         pc:text-[1.8rem];
+}
+
+.date-input__field:focus {
+  @apply border-[var(--color-brand-primary)];
+}
+
+.date-input__btn {
+  @apply absolute right-[0.2rem] flex items-center justify-center w-[4.4rem] h-[4.4rem]
+         rounded-[999px] border-0 cursor-pointer bg-transparent
+         text-[var(--color-brand-text)];
+}
+
+.date-input__btn:hover {
+  @apply bg-[var(--color-brand-bg)];
+}
+
+/* 달력 팝업 — 카탈로그 calendar 컴포넌트를 date-input 아래에 띄움 (calendar.js가 생성) */
+.date-input__popup {
+  @apply absolute top-[calc(100%+0.8rem)] left-0 z-[1100];
+}
+
+/* .calendar의 inline-block이 hidden 기본 display:none을 이기므로 명시 */
+.date-input__popup[hidden] {
+  @apply [display:none];
+}
+
+/* 채널별 게시 설정 패널 */
+.channel-panel {
+  @apply flex flex-col gap-[1.8rem] p-[2rem] rounded-[1.6rem]
+         bg-[var(--color-brand-surface-muted)] list-none m-0
+         pc:p-[3rem];
+}
+
+.channel-item {
+  @apply flex items-center gap-[1.4rem];
+}
+
+.channel-item__icon {
+  @apply flex items-center justify-center w-[3.4rem] h-[3.4rem] shrink-0
+         text-[var(--color-brand-primary)];
+}
+
+.channel-item__body {
+  @apply flex flex-col gap-[0.6rem] pc:flex-row pc:items-center pc:gap-[2.4rem];
+}
+
+.channel-item__name {
+  @apply text-[1.6rem] font-[700] leading-none text-[var(--color-brand-text)]
+  pc:text-[1.8rem];
+}
+
+.channel-item__date {
+  @apply text-[1.4rem] leading-none text-[var(--color-brand-text)]
+  pc:text-[1.8rem];
+}
+
+/* 채널 로고 아이콘(ico-sns) — Figma 정본: 34px 컨테이너 안 30px (mask contain이 비율 유지) */
+.channel-item__icon .ico-sns {
+  @apply w-[3rem] h-[3rem];
+}

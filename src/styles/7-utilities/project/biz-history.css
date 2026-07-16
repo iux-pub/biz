@@ -1,0 +1,183 @@
+/**
+ * 감성미식 BIZ — 게시 이력 관리 (sub6.html)
+ *
+ * 기준: Figma 게시 이력 관리 Mobile 57:1030 / PC 57:965.
+ * 필터 바 + 이력 카드 리스트. 대시보드 셸(biz-main.css) 재사용.
+ * 색상은 전부 --color-brand-* / KRDS 시맨틱 토큰. raw hex 미사용.
+ */
+
+/* ─── 필터 바 ─── */
+.history-filter {
+  @apply flex flex-col gap-[1rem] p-[1.6rem] mb-[2rem] rounded-[1.6rem]
+         bg-[var(--color-surface)] pc:flex-row pc:items-center pc:mb-[2.4rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-brand-primary-dark) 8%, transparent);
+}
+
+/* 칩 그룹(fieldset)이 남는 폭을 차지해 기간 선택을 우측 끝으로 밀어낸다 (Figma PC) */
+.history-filter fieldset {
+  @apply pc:flex-1;
+}
+
+/* 이 화면의 필터 칩 — Figma: Mobile 2×2 반폭 그리드(135×42) / PC hug 폭(높이 52, 18px)
+   선택 상태는 base(.choice-input:checked)의 brand-primary 채움을 그대로 사용 */
+.history-filter .choice-chip {
+  @apply relative bg-[var(--color-brand-bg)] min-h-[4.2rem] w-[calc(50%-0.5rem)]
+         pc:min-h-[5.2rem] pc:w-auto pc:text-[1.8rem];
+}
+
+/* 시각 높이는 Figma대로 42px 유지, 터치 영역은 상하 1px 확장으로 44px 확보 */
+.history-filter .choice-chip::after {
+  content: '';
+
+  @apply absolute inset-x-0 top-[-0.1rem] bottom-[-0.1rem];
+}
+
+/* 기간 선택 셀렉트 — 네이티브 select + 커스텀 화살표 래퍼 */
+.history-filter__period {
+  @apply relative flex items-center pc:shrink-0;
+}
+
+/* Figma: 텍스트 Mobile 16px / PC 18px, 높이 PC 52px (Mobile은 터치 44px 룰 우선) */
+.history-filter__select {
+  @apply w-full min-h-[4.4rem] pl-[2rem] pr-[4.8rem] rounded-[999px] border border-[transparent]
+         bg-[var(--color-brand-bg)] text-[1.6rem] text-[var(--color-brand-text)]
+         appearance-none cursor-pointer pc:w-auto pc:min-h-[5.2rem] pc:text-[1.8rem];
+}
+
+.history-filter__select:focus {
+  @apply border-[var(--color-brand-primary)];
+}
+
+.history-filter__arrow {
+  @apply absolute right-[1.8rem] pointer-events-none text-[var(--color-brand-text)];
+}
+
+/* ─── 이력 카드 ─── */
+
+/* Figma: 카드 간격 Mobile 20 / PC 30 */
+.history-list {
+  @apply flex flex-col gap-[2rem] list-none m-0 p-0 pc:gap-[3rem];
+}
+
+/* Figma: 패딩 Mobile 20 / PC 30, 썸네일↔본문 Mobile 20 / PC 30 */
+.history-card {
+  @apply flex flex-col gap-[2rem] p-[2rem] rounded-[1.6rem] bg-[var(--color-surface)]
+         pc:flex-row pc:items-start pc:gap-[3rem] pc:p-[3rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-brand-primary-dark) 6%, transparent);
+}
+
+/* Figma: 썸네일 Mobile 280×280 정사각 풀폭 / PC 190×190, radius 10 */
+.history-card__thumb {
+  @apply block w-full aspect-square object-cover rounded-[1rem] shrink-0
+         pc:w-[19rem] pc:h-[19rem] pc:aspect-auto;
+}
+
+/* 완료되지 않은 게시물(실패·대기) 썸네일은 흑백 처리 (Figma 시안)
+   — 카드 루트의 상태 modifier가 자동 적용. img에 별도 클래스 불필요 */
+.history-card--error .history-card__thumb,
+.history-card--pending .history-card__thumb {
+  filter: grayscale(1) opacity(0.55);
+}
+
+/* Figma: 제목↔상태 간격 20 */
+.history-card__body {
+  @apply flex flex-col gap-[2rem] min-w-0 flex-1;
+}
+
+/* Figma: 제목 Mobile 16px / PC 22px B */
+.history-card__title {
+  @apply m-0 text-[1.6rem] font-[700] text-[var(--color-brand-text)]
+         overflow-hidden text-ellipsis whitespace-nowrap pc:text-[2.2rem];
+}
+
+/* Figma: 채널 텍스트 Mobile 14px / PC 18px B, 채널행↔날짜행(모바일 줄바꿈 시) 10 */
+.history-card__status {
+  @apply flex flex-wrap items-center gap-x-[1rem] gap-y-[1rem] text-[1.4rem] pc:text-[1.8rem];
+}
+
+.history-card__channel {
+  @apply flex items-center gap-[0.8rem] font-[700];
+}
+
+/* ── 상태 통합 — 카드 루트(li.history-card)의 modifier 하나로
+   채널명·로고(ico-sns)·날짜 색 + 썸네일 흑백까지 전부 결정한다.
+   내부 요소(img·span)에는 어떤 modifier도 달지 않는다.
+   완료: history-card--success (썸네일 원본 컬러)
+   실패: history-card--error   (썸네일 흑백)
+   대기: history-card--pending (썸네일 흑백) ── */
+
+/* Figma 79:143·79:140 — 완료: 채널 primary-dark(#235952) · 날짜 brand-primary(#5a928b) */
+.history-card--success .history-card__channel {
+  @apply text-[var(--color-brand-primary-dark)];
+}
+
+.history-card--success .history-card__date {
+  @apply text-[var(--color-brand-primary)];
+}
+
+/* Figma 79:159·79:156 — 실패: 채널·날짜 모두 status-error(#ff2600) */
+.history-card--error .history-card__channel,
+.history-card--error .history-card__date {
+  @apply text-[var(--color-brand-status-error)];
+}
+
+/* Figma 79:178 — 대기: 채널 muted(#666) · 날짜는 기본색(#666) 그대로 */
+.history-card--pending .history-card__channel {
+  @apply text-[var(--color-brand-text-muted)];
+}
+
+/* Figma: 채널 아이콘 Mobile 24 / PC 34 */
+.history-card__channel-icon {
+  @apply flex items-center justify-center w-[2.4rem] h-[2.4rem] shrink-0
+         pc:w-[3.4rem] pc:h-[3.4rem];
+}
+
+/* 로고 아이콘(ico-sns)이 컨테이너에 맞춰 스케일 (mask contain이 비율 유지) */
+.history-card__channel-icon .ico-sns {
+  @apply w-full h-full;
+}
+
+/* Figma: 날짜 Mobile 14px / PC 16px — 상태별 색은 위 history-card__status--* 규칙이 결정 */
+.history-card__date {
+  @apply text-[1.4rem] text-[var(--color-brand-text-muted)] pc:text-[1.6rem];
+}
+
+.history-card__actions {
+  @apply flex flex-col gap-[1rem] pc:flex-row pc:justify-end pc:mt-auto;
+}
+
+/* Figma 79:158 — 기본 버튼 배경 icon-muted(#666), radius 16,
+   높이 Mobile 42(시각) / PC 52, 텍스트 Mobile 16px / PC 18px B */
+.history-card__btn {
+  @apply relative inline-flex items-center justify-center gap-[0.6rem] min-h-[4.2rem] px-[1.8rem]
+         rounded-[1.6rem] border-0 cursor-pointer no-underline
+         bg-[var(--color-brand-icon-muted)] text-[1.6rem] font-[700]
+         text-[var(--color-text-inverse)]
+         pc:min-h-[5.2rem] pc:text-[1.8rem];
+}
+
+/* 모바일 시각 높이 42px 유지 — ::after로 터치 영역 44px 확보 */
+.history-card__btn::after {
+  content: '';
+
+  @apply absolute inset-x-0 -inset-y-[0.1rem];
+}
+
+/* Figma: 버튼 내 화살표 아이콘 Mobile 20 / PC 24 */
+.history-card__btn svg {
+  @apply w-[2rem] h-auto pc:w-[2.4rem];
+}
+
+.history-card__btn:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-icon-muted)_85%,black)];
+}
+
+.history-card__btn--primary {
+  @apply bg-[var(--color-brand-primary)];
+}
+
+.history-card__btn--primary:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary)_88%,black)];
+}

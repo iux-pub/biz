@@ -1,0 +1,38 @@
+/**
+ * 감성미식 BIZ — SNS 로고 아이콘 (CSS mask)
+ *
+ * 모양은 mask-image(src/image/icon-*.svg), 색상은 background-color: currentColor —
+ * 부모의 color 토큰이 그대로 아이콘 색이 된다. 단색 로고 전용.
+ * 크기·display는 사용하는 쪽 클래스가 담당한다(이 블록은 모양·색만).
+ *
+ * 사용법:
+ *   <span class="사용처아이콘클래스 ico-sns ico-sns--instagram" aria-hidden="true"></span>
+ *   <span class="사용처아이콘클래스 ico-sns ico-sns--naver-blog" aria-hidden="true"></span>
+ *
+ * 아이콘 추가: src/image/icon-이름.svg 저장 후 아래에 modifier 한 줄 추가.
+ * 주의: mask-image의 url은 빌드 산출물(dist/css/style.css) 기준 상대경로다 — 빌드가 재배치하지 않음.
+ */
+
+/* ── 색 변경 방법 (개발 참고) ─────────────────────────────────────────
+   로고는 background-color: currentColor(bg-current)로 칠해진다.
+   → 이 요소나 부모 클래스에 color(text-* 토큰)를 지정하면 로고가 그 색으로 바뀐다.
+
+   예) .my-icon { @apply text-[var(--color-brand-primary)]; }   → 세이지 그린 로고
+       .my-card.is-error .ico-sns { color: var(--color-brand-status-error); } → 빨간 로고
+
+   상태별 색 전환도 같은 원리 — modifier 클래스가 color만 바꾸면 로고가 따라 변한다.
+   (각 페이지의 실제 색 결정 지점에는 "ico-sns 로고 색" 주석이 달려 있다)
+   ─────────────────────────────────────────────────────────────────── */
+.ico-sns {
+  @apply bg-current [mask:no-repeat_center/contain];
+}
+
+/* 인스타그램 (원본 비율 40:40) */
+.ico-sns--instagram {
+  @apply [mask-image:url('../../src/image/icon-instagram.svg')];
+}
+
+/* 네이버 블로그 (원본 비율 37:40) */
+.ico-sns--naver-blog {
+  @apply [mask-image:url('../../src/image/icon-naver-blog.svg')];
+}

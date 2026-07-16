@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>감성미식 BIZ — 로그인</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov-dynamic-subset.min.css">
+  <link rel="stylesheet" href="dist/css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-to-content">본문 바로가기</a>
+  <header id="header" hidden></header>
+
+  <main id="main" class="auth">
+    <section aria-label="브랜드">
+      <div class="container">
+      <h1 class="auth__brand">
+      <img class="auth__logo" src="src/image/logo-login.png" alt="감성미식" width="854" height="854">
+      <span class="auth__badge">BIZ</span>
+    </h1>
+      </div>
+    </section>
+
+    <section aria-label="로그인">
+      <div class="container">
+      <form class="auth__form" action="main.html" method="get">
+      <div class="auth__field">
+        <label class="auth__label" for="login-email">아이디 (이메일)</label>
+        <input class="auth__input" type="email" id="login-email" name="email"
+               placeholder="email@example.com" autocomplete="username" required>
+      </div>
+
+      <div class="auth__field">
+        <label class="auth__label" for="login-password">비밀번호</label>
+        <input class="auth__input" type="password" id="login-password" name="password"
+               placeholder="**********" autocomplete="current-password" required>
+      </div>
+
+      <button type="submit" class="auth__submit">로그인</button>
+    </form>
+      </div>
+    </section>
+
+    <section aria-label="계정 도움말">
+      <div class="container">
+      <nav class="auth__links" aria-label="계정 도움말">
+      <a class="auth__link" href="#">비밀번호찾기</a>
+      <button type="button" class="auth__link" data-modal-open="signup-modal" aria-haspopup="dialog">회원가입</button>
+    </nav>
+      </div>
+    </section>
+  </main>
+  <footer id="footer" hidden></footer>
+
+  <!-- 회원가입 모달 — sub2.html 폼과 동일. 열기/닫기·포커스 트랩은 modal.js -->
+  <div class="modal" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-title" aria-hidden="true" hidden>
+    <div class="modal__overlay"></div>
+    <section class="auth-modal" aria-labelledby="signup-title">
+      <button type="button" class="auth-modal__close" aria-label="회원가입 닫기" data-modal-close>&times;</button>
+
+      <h2 class="auth-modal__title" id="signup-title">회원가입</h2>
+
+      <div data-signup-steps>
+        <!-- 1단계: 계정 정보 입력 -->
+        <div data-step="1">
+          <p class="auth-modal__subtitle">계정 정보 입력</p>
+
+          <form method="get" data-next-step="2">
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-name">상호명</label>
+              <div class="auth-modal__row">
+                <input class="auth-modal__input" type="text" id="signup-name" name="business-name"
+                       placeholder="example" autocomplete="organization" required>
+                <button type="button" class="auth-modal__search">중복확인</button>
+              </div>
+            </div>
+
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-password">비밀번호</label>
+              <input class="auth-modal__input" type="password" id="signup-password" name="password"
+                     placeholder="********" autocomplete="new-password" required>
+            </div>
+
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-password-confirm">비밀번호 확인</label>
+              <input class="auth-modal__input" type="password" id="signup-password-confirm" name="password-confirm"
+                     placeholder="********" autocomplete="new-password" required>
+            </div>
+
+            <div class="auth-modal__field">
+              <div class="auth-modal__label-row">
+                <label class="auth-modal__label" for="signup-email">이메일</label>
+                <span class="auth-modal__label-note">선택 인증 &middot; 계정 찾기용</span>
+              </div>
+              <input class="auth-modal__input" type="email" id="signup-email" name="email"
+                     placeholder="email@example.com" autocomplete="email">
+            </div>
+
+            <button type="submit" class="auth-modal__submit">다음단계로 (1/3)</button>
+          </form>
+        </div>
+
+        <!-- 2단계: 사업자 진위확인 -->
+        <div data-step="2" hidden>
+          <p class="auth-modal__subtitle">사업자 진위확인</p>
+
+          <form method="get" data-next-step="3">
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-bizno">사업자등록번호</label>
+              <div class="auth-modal__row">
+                <input class="auth-modal__input" type="text" id="signup-bizno" name="business-number"
+                       placeholder="000-00-00000" inputmode="numeric" required>
+                <button type="button" class="auth-modal__search">진위확인</button>
+              </div>
+            </div>
+
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-open-date">개업일자</label>
+              <input class="auth-modal__input" type="text" id="signup-open-date" name="opening-date" required>
+            </div>
+
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-owner">대표자성명</label>
+              <input class="auth-modal__input" type="text" id="signup-owner" name="owner-name"
+                     autocomplete="name" required>
+            </div>
+
+            <p class="auth-modal__verify" role="status">
+              <svg class="auth-modal__verify-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M8.83333 13.8333L14.7083 7.95833L13.5417 6.79167L8.83333 11.5L6.45833 9.125L5.29167 10.2917L8.83333 13.8333ZM10 18.3333C8.84722 18.3333 7.76389 18.1146 6.75 17.6771C5.73611 17.2396 4.85417 16.6458 4.10417 15.8958C3.35417 15.1458 2.76042 14.2639 2.32292 13.25C1.88542 12.2361 1.66667 11.1528 1.66667 10C1.66667 8.84722 1.88542 7.76389 2.32292 6.75C2.76042 5.73611 3.35417 4.85417 4.10417 4.10417C4.85417 3.35417 5.73611 2.76042 6.75 2.32292C7.76389 1.88542 8.84722 1.66667 10 1.66667C11.1528 1.66667 12.2361 1.88542 13.25 2.32292C14.2639 2.76042 15.1458 3.35417 15.8958 4.10417C16.6458 4.85417 17.2396 5.73611 17.6771 6.75C18.1146 7.76389 18.3333 8.84722 18.3333 10C18.3333 11.1528 18.1146 12.2361 17.6771 13.25C17.2396 14.2639 16.6458 15.1458 15.8958 15.8958C15.1458 16.6458 14.2639 17.2396 13.25 17.6771C12.2361 18.1146 11.1528 18.3333 10 18.3333Z" fill="currentColor"/>
+              </svg>
+              국세청 확인 완료 : 계속사업자 (일반과세)
+            </p>
+
+            <button type="submit" class="auth-modal__submit">다음단계로 (2/3)</button>
+          </form>
+        </div>
+
+        <!-- 3단계: 사업장 정보 입력 (최종 제출) -->
+        <div data-step="3" hidden>
+          <p class="auth-modal__subtitle">사업장 정보 입력</p>
+
+          <form action="main.html" method="get">
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-store-name">상호명</label>
+              <input class="auth-modal__input" type="text" id="signup-store-name" name="business-name"
+                     placeholder="**카페" autocomplete="organization" required>
+            </div>
+
+            <fieldset class="auth-modal__field">
+              <legend class="auth-modal__label">업종선택</legend>
+              <div class="auth-modal__chips">
+                <input class="auth-modal__chip-input sr-only" type="radio" id="type-cafe" name="business-type" value="cafe" checked>
+                <label class="auth-modal__chip" for="type-cafe">카페/베이커리</label>
+
+                <input class="auth-modal__chip-input sr-only" type="radio" id="type-restaurant" name="business-type" value="restaurant">
+                <label class="auth-modal__chip" for="type-restaurant">식당</label>
+
+                <input class="auth-modal__chip-input sr-only" type="radio" id="type-pub" name="business-type" value="pub">
+                <label class="auth-modal__chip" for="type-pub">주점</label>
+
+                <input class="auth-modal__chip-input sr-only" type="radio" id="type-etc" name="business-type" value="etc">
+                <label class="auth-modal__chip" for="type-etc">기타</label>
+              </div>
+            </fieldset>
+
+            <div class="auth-modal__field">
+              <label class="auth-modal__label" for="signup-address">사업장주소</label>
+              <div class="auth-modal__row">
+                <input class="auth-modal__input" type="text" id="signup-address" name="business-address" required>
+                <button type="button" class="auth-modal__search">검색</button>
+              </div>
+            </div>
+
+            <button type="submit" class="auth-modal__submit">회원가입</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="src/js/modal.js"></script>
+  <script src="src/js/signup-steps.js"></script>
+</body>
+</html>

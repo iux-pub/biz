@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>감성미식 BIZ — 회원가입 사업자 진위확인</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov-dynamic-subset.min.css">
+  <link rel="stylesheet" href="dist/css/style.css">
+</head>
+<body>
+  <a href="#main" class="skip-to-content">본문 바로가기</a>
+  <header id="header" hidden></header>
+
+  <main id="main" class="auth-modal-page">
+    <section class="auth-modal" aria-labelledby="signup-title">
+      <div class="container">
+      <a class="auth-modal__close" href="sub.html" aria-label="회원가입 닫기">&times;</a>
+
+      <h1 class="auth-modal__title" id="signup-title">회원가입</h1>
+      <p class="auth-modal__subtitle">사업자 진위확인</p>
+
+      <form action="sub2-3.html" method="get">
+        <div class="auth-modal__field">
+          <label class="auth-modal__label" for="signup-bizno">사업자등록번호</label>
+          <div class="auth-modal__row">
+            <input class="auth-modal__input" type="text" id="signup-bizno" name="business-number"
+                   placeholder="000-00-00000" inputmode="numeric" required>
+            <button type="button" class="auth-modal__search">진위확인</button>
+          </div>
+        </div>
+
+        <div class="auth-modal__field">
+          <label class="auth-modal__label" for="signup-open-date">개업일자</label>
+          <input class="auth-modal__input" type="text" id="signup-open-date" name="opening-date" required>
+        </div>
+
+        <div class="auth-modal__field">
+          <label class="auth-modal__label" for="signup-owner">대표자성명</label>
+          <input class="auth-modal__input" type="text" id="signup-owner" name="owner-name"
+                 autocomplete="name" required>
+        </div>
+
+        <p class="auth-modal__verify" role="status">
+          <svg class="auth-modal__verify-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M8.83333 13.8333L14.7083 7.95833L13.5417 6.79167L8.83333 11.5L6.45833 9.125L5.29167 10.2917L8.83333 13.8333ZM10 18.3333C8.84722 18.3333 7.76389 18.1146 6.75 17.6771C5.73611 17.2396 4.85417 16.6458 4.10417 15.8958C3.35417 15.1458 2.76042 14.2639 2.32292 13.25C1.88542 12.2361 1.66667 11.1528 1.66667 10C1.66667 8.84722 1.88542 7.76389 2.32292 6.75C2.76042 5.73611 3.35417 4.85417 4.10417 4.10417C4.85417 3.35417 5.73611 2.76042 6.75 2.32292C7.76389 1.88542 8.84722 1.66667 10 1.66667C11.1528 1.66667 12.2361 1.88542 13.25 2.32292C14.2639 2.76042 15.1458 3.35417 15.8958 4.10417C16.6458 4.85417 17.2396 5.73611 17.6771 6.75C18.1146 7.76389 18.3333 8.84722 18.3333 10C18.3333 11.1528 18.1146 12.2361 17.6771 13.25C17.2396 14.2639 16.6458 15.1458 15.8958 15.8958C15.1458 16.6458 14.2639 17.2396 13.25 17.6771C12.2361 18.1146 11.1528 18.3333 10 18.3333Z" fill="currentColor"/>
+          </svg>
+          국세청 확인 완료 : 계속사업자 (일반과세)
+        </p>
+
+        <button type="submit" class="auth-modal__submit">다음단계로 (2/3)</button>
+      </form>
+      </div>
+    </section>
+  </main>
+  <footer id="footer" hidden></footer>
+</body>
+</html>

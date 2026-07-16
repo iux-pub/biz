@@ -1,0 +1,250 @@
+/**
+ * 감성미식 BIZ — 예약캘린더 (sub8.html)
+ *
+ * 기준: Figma 예약 캘린더 Mobile 279:625 + PC 279:591 정확값.
+ * 월간 달력 위젯(rsv-cal) + 선택 날짜 예약 게시 상세(rsv-detail). 대시보드 셸(biz-main.css) 재사용.
+ * 상태 표기: 모바일 10px 점 / PC 105×30 칩(시간+상태 텍스트) — 같은 DOM(.rsv-cal__mark)을 반응형 전환.
+ * 상세 상태 색상은 달력 칩 배경 팔레트(실패 error / 완료 primary / 예약 primary-soft)와 동일.
+ * 색상은 전부 --color-brand-* / KRDS 시맨틱 토큰. raw hex 미사용.
+ * 그림자 정본 0 8px 20px rgba(31,41,51,8%) ≈ color-mix(gray-90 8%).
+ */
+
+/* Figma 정본: 달력→상세 모바일 40px / PC 60px 세로 스택 (PC도 900px 풀폭 1열) */
+.rsv-layout {
+  @apply grid grid-cols-1 gap-[4rem] pc:gap-[6rem];
+}
+
+/* ─── 월간 달력 카드 ─── */
+
+/* Figma 정본: 모바일 320×468 / PC 900×694 흰 카드, radius 16px —
+   그리드 보더가 좌우 끝까지 닿아 좌우 패딩 없음. PC 내비 absolute 기준점 */
+.rsv-cal {
+  @apply relative pt-[2rem] rounded-[1.6rem] bg-[var(--color-surface)] overflow-hidden
+         pc:pt-[3rem];
+
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+/* Figma 정본: 모바일 22px 중앙, 제목→내비 20px / PC 28px 중앙(top 42), 제목→요일 행 40px */
+.rsv-cal__title {
+  @apply m-0 mb-[2rem] text-center text-[2.2rem] font-[700] leading-none
+         text-[var(--color-brand-text)]
+         pc:mt-[1.2rem] pc:mb-[4rem] pc:text-[2.8rem];
+}
+
+/* Figma 정본: 모바일 중앙 정렬 행 / PC 우측 상단 absolute(top 30, right 20), 간격 10px */
+.rsv-cal__nav {
+  @apply flex justify-center gap-[1rem] mb-[2rem]
+         pc:absolute pc:top-[3rem] pc:right-[2rem] pc:mb-0;
+}
+
+/* Figma 정본: 높이 52px, radius 16px, 웜샌드 배경, 좌우 패딩 20px, 16px 레귤러 */
+.rsv-cal__nav-btn {
+  @apply inline-flex items-center justify-center min-h-[5.2rem] px-[2rem]
+         rounded-[1.6rem] border-0 cursor-pointer bg-[var(--color-brand-bg)]
+         text-[1.6rem] font-[400] leading-none text-[var(--color-brand-text-primary-light)];
+}
+
+.rsv-cal__nav-btn:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-bg)_92%,black)];
+}
+
+.rsv-cal__nav-icon {
+  @apply block w-[2.4rem] h-[2.4rem];
+}
+
+/* 7열 고정 표 — 열 폭 균등, 보더 공유 */
+.rsv-cal__grid {
+  @apply w-full table-fixed border-collapse;
+}
+
+/* Figma 정본: 요일 행 34px, #f4f4f4 배경(≈bg-subtler), 상하 보더 #ccc,
+   모바일 14px / PC 18px 볼드 우측 정렬 */
+.rsv-cal__grid th {
+  @apply h-[3.4rem] px-[0.8rem] bg-[var(--color-bg-subtler)]
+         border-y border-[var(--color-brand-icon-subtle)]
+         text-[1.4rem] font-[700] text-right text-[var(--color-brand-text)]
+         pc:text-[1.8rem];
+}
+
+/* Figma 정본: 열 사이 세로 보더 #ccc */
+.rsv-cal__grid th + th,
+.rsv-cal__grid td + td {
+  @apply border-l border-[var(--color-brand-icon-subtle)];
+}
+
+/* Figma 정본: 셀 높이 모바일 60px / PC 110px */
+.rsv-cal__grid td {
+  @apply h-[6rem] p-0 align-top pc:h-[11rem];
+}
+
+/* Figma 정본(PC 279:591): 주(행) 사이 가로 보더 #ccc — 모바일 시안에는 없음 */
+.rsv-cal__grid tbody tr + tr td {
+  @apply pc:border-t pc:border-t-[var(--color-brand-icon-subtle)];
+}
+
+/* 일자 버튼 — 셀 전체 채움으로 터치 영역(모바일 46×60 ≥ 44px) 확보.
+   PC 상단 여백 10px(Figma: 일자 top 10, 칩 top 35) */
+.rsv-cal__day {
+  @apply flex flex-col w-full h-full gap-[1rem] pt-[0.4rem] px-[0.8rem] pb-[0.6rem]
+         bg-transparent border-0 rounded-none cursor-pointer
+         pc:pt-[1rem];
+}
+
+.rsv-cal__day:hover {
+  @apply bg-[var(--color-brand-bg)];
+}
+
+/* Figma 정본: 일자 모바일 12px "1" / PC 16px "1일", 우측 상단 정렬, #222 */
+.rsv-cal__num {
+  @apply self-end text-[1.2rem] leading-none text-[var(--color-brand-text)]
+         pc:text-[1.6rem];
+}
+
+/* PC에서만 "일" 접미사 노출 — 콘텐츠 문자가 필요해 @media 중첩 사용 */
+.rsv-cal__num::after {
+  content: '';
+
+  @media (width >= 1280px) {
+    content: '일';
+  }
+}
+
+/* 오늘 — 시안 외 보조 상태: 딥틸 볼드 */
+.rsv-cal__day[aria-current='date'] .rsv-cal__num {
+  @apply font-[700] text-[var(--color-brand-primary-dark)];
+}
+
+/* 선택됨 — 시안 외 보조 상태: 웜샌드 채움 */
+.rsv-cal__day[aria-selected='true'] {
+  @apply bg-[var(--color-brand-surface-muted)];
+}
+
+/* 상태 표기 컨테이너 — 모바일 점 가로 나열 / PC 칩 세로 스택, 모두 중앙 정렬 */
+.rsv-cal__marks {
+  @apply flex flex-wrap justify-center gap-[0.4rem]
+         pc:flex-col pc:flex-nowrap pc:items-center;
+}
+
+/* Figma 정본: 모바일 10px 점 / PC 105×30 칩(radius 16, 패딩 10, 내부 간격 5) */
+.rsv-cal__mark {
+  @apply flex items-center justify-center w-[1rem] h-[1rem] rounded-full
+         pc:w-auto pc:h-[3rem] pc:min-w-[10.5rem] pc:rounded-[1.6rem]
+         pc:px-[1rem] pc:gap-[0.5rem];
+}
+
+/* 칩 내부 아이콘·텍스트 — PC 전용 (Figma: 아이콘 14px, 흰 14px 레귤러)
+   text-*가 곧 ico-sns 로고 색 — 여기 값을 바꾸면 칩 안 로고 색이 바뀐다
+   (완료/예약 칩 흰 텍스트 명암비 — Figma 원본값 유지, AA 미달 항목으로 보고) */
+.rsv-cal__mark-icon {
+  @apply hidden pc:block pc:w-[1.4rem] pc:h-[1.4rem] text-[var(--color-text-inverse)];
+}
+
+.rsv-cal__mark-label {
+  @apply hidden pc:block text-[1.4rem] leading-none whitespace-nowrap
+         text-[var(--color-text-inverse)];
+}
+
+/* 게시실패 — 레드 #ff2600 (모바일 점·PC 칩 공통) */
+.rsv-cal__mark--error {
+  @apply bg-[var(--color-brand-status-error)];
+}
+
+/* 게시완료 — Figma 정본: 모바일 점 딥틸 #235952 / PC 칩 세이지 #5a928b */
+.rsv-cal__mark--success {
+  @apply bg-[var(--color-brand-primary-dark)] pc:bg-[var(--color-brand-primary)];
+}
+
+/* 예약(대기) — 소프트 세이지 #a0c3bf */
+.rsv-cal__mark--pending {
+  @apply bg-[var(--color-brand-primary-soft)];
+}
+
+/* ─── 선택 날짜 예약 게시 상세 ─── */
+
+/* Figma 정본: 세이지 카드 #e8ede3, radius 16px, 모바일 패딩 20px / PC 30px·최소 112px */
+.rsv-detail {
+  @apply flex flex-col gap-[3rem] p-[2rem] rounded-[1.6rem]
+         bg-[var(--color-brand-surface-muted)]
+         pc:min-h-[11.2rem] pc:p-[3rem] pc:justify-center;
+}
+
+/* 예약 없는 날짜 안내 */
+.rsv-detail__empty {
+  @apply m-0 py-[2rem] text-center text-[1.4rem] leading-[1.6]
+         text-[var(--color-brand-text-muted)] pc:py-0;
+}
+
+/* Figma 정본: 아이콘 24px + 본문, 간격 10px — PC는 버튼 열이 우측(아이콘|본문|버튼) */
+.rsv-event {
+  @apply grid grid-cols-[2.4rem_1fr] items-start gap-x-[1rem]
+         pc:grid-cols-[2.4rem_1fr_auto] pc:gap-x-[1.2rem];
+}
+
+/* 상태 기본값(대기) — 아이콘·헤드 색은 status modifier가 결정 */
+.rsv-event__icon {
+  @apply block w-[2.4rem] h-[2.4rem];
+}
+
+/* Figma 정본: 모바일 14px / PC 18px 볼드, 행간 1.4 — 일시 줄 + 채널 줄 */
+.rsv-event__head {
+  @apply m-0 text-[1.4rem] font-[700] leading-[1.4] pc:text-[1.8rem] pc:self-center;
+}
+
+/* ── 상태별 색 — text-*가 텍스트와 ico-sns 로고 색을 함께 바꾼다.
+   상태 색 변경은 아래 세 modifier의 토큰만 수정하면 된다 ── */
+
+/* 게시완료 — 달력 칩 배경과 동일한 brand-primary(#5a928b) */
+.rsv-event--success .rsv-event__icon,
+.rsv-event--success .rsv-event__head {
+  @apply text-[var(--color-brand-primary)];
+}
+
+/* 예약(대기) — sub6 history-card__status--pending과 동일한 muted(#666), 설명(desc)까지 동일 색상 */
+.rsv-event--pending .rsv-event__icon,
+.rsv-event--pending .rsv-event__head,
+.rsv-event--pending .rsv-event__desc {
+  @apply text-[var(--color-brand-text-muted)];
+}
+
+/* 게시실패 — status-error(#ff2600), 설명(desc)까지 동일 색상 */
+.rsv-event--error .rsv-event__icon,
+.rsv-event--error .rsv-event__head,
+.rsv-event--error .rsv-event__desc {
+  @apply text-[var(--color-brand-status-error)];
+}
+
+/* Figma 정본: 14px 레귤러, 행간 1.4, 세이지 그린, 제목→설명 10px
+   (명암비 3.55:1 — Figma 원본값 유지, AA 미달 항목으로 보고) */
+.rsv-event__desc {
+  @apply col-start-2 m-0 mt-[1rem] text-[1.4rem] leading-[1.4]
+         text-[var(--color-brand-primary)] pc:text-[1.6rem];
+}
+
+/* Figma 정본: 모바일 세로 스택(설명→버튼 30px, 버튼 간 10px, 카드 폭 전체) /
+   PC 우측 가로 정렬(버튼 118×52) */
+.rsv-event__actions {
+  @apply col-span-2 flex flex-col gap-[1rem] mt-[3rem]
+         pc:col-span-1 pc:col-start-3 pc:row-start-1 pc:row-span-2
+         pc:flex-row pc:items-center pc:self-center pc:mt-0;
+}
+
+/* Figma 정본: 모바일 42px·16px / PC 118×52·18px, radius 16px, #666 배경 + 흰 볼드 */
+.rsv-event__btn {
+  @apply relative inline-flex items-center justify-center min-h-[4.2rem] px-[2rem]
+         rounded-[1.6rem] border-0 cursor-pointer
+         bg-[var(--color-brand-icon-muted)] text-[1.6rem] font-[700] leading-none
+         text-[var(--color-text-inverse)]
+         pc:min-w-[11.8rem] pc:min-h-[5.2rem] pc:text-[1.8rem];
+}
+
+/* 모바일 시각 높이 42px 유지 — ::before로 터치 영역 44px 확보 */
+.rsv-event__btn::before {
+  content: '';
+  position: absolute;
+  inset: -0.1rem 0;
+}
+
+.rsv-event__btn:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-icon-muted)_85%,black)];
+}

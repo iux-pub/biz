@@ -1,0 +1,150 @@
+/**
+ * 감성미식 BIZ — SNS 계정연동 관리 (sub7.html)
+ *
+ * 기준: Figma SNS 계정연동 관리 Mobile 99:245 / PC 99:184 정확값.
+ * 채널별 연동 카드 + 연동 안내. 대시보드 셸(biz-main.css) 재사용.
+ * 색상은 전부 --color-brand-* / KRDS 시맨틱 토큰. raw hex 미사용.
+ * 그림자 정본 0 8px 20px rgba(31,41,51,8%) ≈ color-mix(gray-90 8%).
+ */
+
+/* Figma 정본: 모바일 패딩 상30/좌우20/하20 · figure→body 30, PC 패딩 30 · gap 24 · 높이 250 */
+.sns__inner {
+  @apply flex flex-col gap-[3.3rem];
+}
+
+.sns-account {
+  @apply flex flex-col items-center gap-[3rem] pt-[3rem] px-[2rem] pb-[2rem] rounded-[1.6rem]
+         bg-[var(--color-surface)] text-center
+         pc:flex-row pc:items-start pc:text-left pc:gap-[2.4rem] pc:p-[3rem] pc:min-h-[25rem];
+}
+
+/* Figma 정본: 그림자는 연결됨 카드에만 — 미연결 카드는 그림자 없음 */
+.sns-account--connected {
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--color-gray-90) 8%, transparent);
+}
+
+/* Figma 정본: 아이콘→배지 간격 10px */
+.sns-account__figure {
+  @apply flex flex-col items-center gap-[1rem] shrink-0;
+}
+
+/* 기본(미연결) 로고는 icon-subtle(#ccc) 회색.
+   text-*가 곧 ico-sns 로고 색 — 아래 --connected 규칙이 색을 전환한다 */
+.sns-account__icon {
+  @apply flex items-center justify-center w-[8.6rem] h-[8.6rem]
+         text-[var(--color-brand-icon-subtle)];
+}
+
+/* 연결됨 상태에서만 로고에 brand-primary(#5a928b) 적용 */
+.sns-account--connected .sns-account__icon {
+  @apply text-[var(--color-brand-primary)];
+}
+
+/* 로고 아이콘(ico-sns)이 86px 컨테이너에 맞춰 스케일 (mask contain이 비율 유지) */
+.sns-account__icon .ico-sns {
+  @apply w-full h-full;
+}
+
+/* Figma 정본: 86×34, radius 10px, 16px 레귤러.
+   기본(미연결) = #ccc 배경 + #222 텍스트 — 배지에 별도 modifier를 달지 않는다.
+   카드 루트의 sns-account--connected가 아이콘과 함께 배지 색도 자동 전환한다 */
+.sns-account__badge {
+  @apply inline-flex items-center justify-center min-w-[8.6rem] min-h-[3.4rem] px-[1rem]
+         rounded-[1rem] text-[1.6rem] font-[400] leading-none
+         bg-[var(--color-brand-icon-subtle)] text-[var(--color-brand-text)];
+}
+
+/* 연결됨 카드 — 세이지 그린 배경 + 흰 16px (명암비 3.55:1 — Figma 원본값 유지, AA 미달 항목으로 보고) */
+.sns-account--connected .sns-account__badge {
+  @apply bg-[var(--color-brand-primary)] text-[var(--color-text-inverse)];
+}
+
+/* 모바일 풀폭(Figma 버튼 280) + PC에서 stretch로 카드 높이를 채워 mt-auto 버튼이 하단에 붙는다 */
+.sns-account__body {
+  @apply flex flex-col items-center gap-[2rem] w-full min-w-0 flex-1 pc:items-start pc:self-stretch;
+}
+
+/* Figma 정본: 모바일 16px / PC 22px 볼드 */
+.sns-account__title {
+  @apply m-0 text-[1.6rem] font-[700] leading-none text-[var(--color-brand-text)]
+         pc:text-[2.2rem];
+}
+
+.sns-account__handle {
+  @apply font-[700] text-[1.6rem];
+}
+
+/* 연동 메타 — Figma 정본: 모바일 14px(핸들 16px)·행간 1.6 세로 스택, PC 16px 한 줄 · 구분 */
+.sns-account__meta {
+  @apply flex flex-col items-center gap-0 list-none m-0 p-0
+         text-[1.4rem] leading-[1.6] text-[var(--color-brand-primary)]
+         pc:flex-row pc:gap-[0.8rem] pc:text-[1.6rem] pc:leading-none;
+}
+
+/* PC 한 줄 배치에서만 · 구분점 노출 — 콘텐츠 문자가 필요해 @media 중첩 사용 */
+.sns-account__meta li + li::before {
+  content: '';
+
+  @media (width >= 1280px) {
+    content: '·';
+    margin-right: 0.8rem;
+  }
+}
+
+.sns-account__desc {
+  @apply m-0 text-[1.6rem] leading-[1.6] text-[var(--color-brand-text-muted)] pc:leading-none;
+}
+
+/* Figma 정본: 메타→버튼 30px(gap 20 + mt 10), 버튼 간 10px */
+.sns-account__actions {
+  @apply flex flex-col gap-[1rem] w-full mt-[1rem]
+         pc:flex-row pc:justify-end pc:w-auto pc:ml-auto pc:mt-auto;
+}
+
+/* Figma 정본: 높이 모바일 42px / PC 52px, radius 16px, #666 배경 + 흰 볼드 16px/18px */
+.sns-account__btn {
+  @apply relative inline-flex items-center justify-center min-h-[4.2rem] px-[2.3rem]
+         rounded-[1.6rem] border-0 cursor-pointer no-underline
+         bg-[var(--color-brand-icon-muted)] text-[1.6rem] font-[700] leading-none
+         text-[var(--color-text-inverse)]
+         pc:min-h-[5.2rem] pc:text-[1.8rem];
+}
+
+/* 모바일 시각 높이 42px 유지 — ::before로 터치 영역 44px 확보 */
+.sns-account__btn::before {
+  content: '';
+  position: absolute;
+  inset: -0.1rem 0;
+}
+
+.sns-account__btn:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-icon-muted)_85%,black)];
+}
+
+/* 세이지 그린 배경 + 흰 볼드 (명암비 3.55:1 — Figma 원본값 유지, AA 미달 항목으로 보고) */
+.sns-account__btn--primary {
+  @apply bg-[var(--color-brand-primary)];
+}
+
+.sns-account__btn--primary:hover {
+  @apply bg-[color-mix(in_srgb,var(--color-brand-primary)_88%,black)];
+}
+
+/* ─── 연동 안내 (PC 전용) — 공용 .info-note(biz-create.css) 대비 sub7 전용 차이 오버라이드 ─── */
+
+/* Figma 정본: 패딩 30(아이콘만 상단 20 위치 = -10 보정), 타이틀·본문 18px */
+.info-note--sns {
+  @apply p-[3rem];
+
+  .info-note__icon {
+    @apply -mt-[1rem];
+  }
+
+  .info-note__title {
+    @apply text-[1.8rem];
+  }
+
+  .info-note__text {
+    @apply text-[1.8rem];
+  }
+}
